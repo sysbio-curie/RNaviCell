@@ -145,9 +145,6 @@ NaviCell$methods(
 
 
 
-
-
-
 #' Format response obtained from the RCurl 'postForm' command 
 #' 
 #' In some cases return from postForm call is 'raw' (e.g. R session in a terminal) otherwise it's plain text (e.g. R GUI)
