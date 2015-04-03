@@ -12,7 +12,7 @@ NaviCell <- setRefClass(
         proxy_url = "character",
         map_url = "character",
         msg_id = "numeric",
-        session_id = "character",
+        session_id = "character"
         #hugo_list = "vector"
     ),
 
@@ -160,7 +160,7 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    getBioTypeList = function(object, mod, zoom_level) {
+    getBiotypeList = function(object, mod, zoom_level) {
     "Return the list of biotypes understood by NaviCell Web Service."
         .self$incMessageId()
         list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_get_biotype_list')
@@ -168,19 +168,19 @@ NaviCell$methods(
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
         response <- .self$formatResponse(response)
         response <- fromJSON(response)
-        return(response)
+        return(response$data)
     }
 )
 
 NaviCell$methods(
     getModuleList = function(object, mod, zoom_level) {
-    "Return the module list of the NaviCell map."
+    "Return the module list of the current NaviCell map."
         .self$incMessageId()
-        list_param <- list(module='', args = array(), msg_id = object@msg_id, action = 'nv_get_module_list')
+        list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_get_module_list')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
         response <- .self$formatResponse(response)
         response <- fromJSON(response)
-        return(response)
+        return(response$data)
     }
 )

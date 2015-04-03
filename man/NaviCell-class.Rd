@@ -21,6 +21,12 @@ NaviCell reference class
 
 \item{\code{generateSessionId(...)}}{Generate a session ID.}
 
+\item{\code{getBiotypeList(object, mod, zoom_level)}}{Return the list of biotypes understood by NaviCell Web Service.}
+
+\item{\code{getHugoList(module_name, zoom_level)}}{Get the list of the HUGO gene symbols for the current map (the list is stored in the object field hugo_list.}
+
+\item{\code{getModuleList(object, mod, zoom_level)}}{Return the module list of the current NaviCell map.}
+
 \item{\code{incMessageId(...)}}{Increase message ID counter.}
 
 \item{\code{launchBrowser(...)}}{Launch client browser and points to the default NaviCell map.}
