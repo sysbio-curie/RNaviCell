@@ -13,7 +13,7 @@ NaviCell <- setRefClass(
         map_url = "character",
         msg_id = "numeric",
         session_id = "character",
-        hugo_list = "vector"
+        #hugo_list = "vector"
     ),
 
     # default values
@@ -142,5 +142,45 @@ NaviCell$methods(
         data <- gsub("\n", '', data)
         data <- gsub(" ", "", data)
         return(data)
+    }
+)
+
+NaviCell$methods(
+    getHugoList = function( module_name, zoom_level) {
+    "Get the list of the HUGO gene symbols for the current map (the list is stored in the object field hugo_list."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_get_hugo_list')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        #message(response)
+        response <- fromJSON(response)
+        return(response$data)
+    }
+)
+
+NaviCell$methods(
+    getBioTypeList = function(object, mod, zoom_level) {
+    "Return the list of biotypes understood by NaviCell Web Service."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_get_biotype_list')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        response <- fromJSON(response)
+        return(response)
+    }
+)
+
+NaviCell$methods(
+    getModuleList = function(object, mod, zoom_level) {
+    "Return the module list of the NaviCell map."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(), msg_id = object@msg_id, action = 'nv_get_module_list')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        response <- fromJSON(response)
+        return(response)
     }
 )
