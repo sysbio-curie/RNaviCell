@@ -1,8 +1,8 @@
 Package: NaviCell
-Title: What the package does (one line)
+Title: R binding for NaviCell Web service. 
 Version: 0.1
-Authors@R: "First Last <first.last@example.com> [aut, cre]"
-Description: What the package does (one paragraph)
+Authors@R: "Eric Bonnet <eric.bonnet@curie.fr>"
+Description: R-NaviCell is the R implementation to access the NaviCell Web Service. 
 Depends: R (>= 3.1.2)
-License: What license is it under?
+License: GNU LGPL 
 LazyData: true
