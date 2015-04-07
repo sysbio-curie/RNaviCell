@@ -1,0 +1,4 @@
+> n$importDataTable()
+[1] "@COMMAND {\"module\":\"\",\"args\":[\"mRNAexpressiondata\",\"DU145-exp\",\"\",\"@DATA\\ngenes\\tdata\\nAKT1\\t0.1233\\nAPC\\t0.0377\",{}],\"msg_id\":1000,\"action\":\"nv_import_datatables\"}"
+
+{'mode': 'cli2srv', 'msg_id': 1004, 'perform': 'send_and_rcv', 'data': '@COMMAND {"action": "nv_import_datatables", "args": ["mRNA expression data", "DU145-exp", "", "@DATA\\ngenes\\tdata\\n\\nAKT1\\t0.1233\\n\\nAPC\\t0.0377\\n\\n", {}], "msg_id": 1004, "module": ""}', 'id': '1428440242330426030054'}

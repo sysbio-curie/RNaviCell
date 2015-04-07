@@ -1,0 +1,3 @@
+genes	data
+AKT1	0.1233
+APC	0.0377

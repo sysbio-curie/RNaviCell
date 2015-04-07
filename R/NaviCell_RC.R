@@ -187,3 +187,22 @@ NaviCell$methods(
 
 
 #### paste(readLines('data.txt'),collapse='\n')->s
+### self._cli2srv('nv_import_datatables', '', [datatable_biotype, datatable_name, '', datatable_url_or_data, params])
+
+NaviCell$methods(
+    importDataTable = function(...) {
+        #print("test")
+        datatable_biotype = "mRNA expression data"
+        datatable_name = "DU145-exp"
+        params = array()
+
+        data_file = paste(readLines('data.txt'),collapse='\n')
+        data_header = "@DATA\n"
+        data <- paste(data_header, data_file, sep="")
+        #cat(data)
+        
+        list_param <- list(module='', args = list(datatable_biotype, datatable_name, "", data, emptyNamedList), msg_id = .self$msg_id, action = 'nv_import_datatables')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        print(str_data)
+    }
+)
