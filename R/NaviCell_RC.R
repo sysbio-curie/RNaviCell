@@ -184,3 +184,6 @@ NaviCell$methods(
         return(response$data)
     }
 )
+
+
+#### paste(readLines('data.txt'),collapse='\n')->s
