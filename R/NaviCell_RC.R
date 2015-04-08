@@ -4,7 +4,7 @@ require(RCurl)
 #' NaviCell reference class
 #'
 NaviCell <- setRefClass(
-    # name for the class
+    # class name
     "NaviCell",
 
     # Define the fields 
@@ -13,10 +13,10 @@ NaviCell <- setRefClass(
         map_url = "character",
         msg_id = "numeric",
         session_id = "character"
-        #hugo_list = "vector"
+        hugo_list = "vector"
     ),
 
-    # default values
+    # Set default values
     methods = list(
         initialize = function(...) {
             proxy_url <<- "https://navicell.curie.fr/cgi-bin/nv_proxy.php"
@@ -190,7 +190,7 @@ NaviCell$methods(
 ### self._cli2srv('nv_import_datatables', '', [datatable_biotype, datatable_name, '', datatable_url_or_data, params])
 
 NaviCell$methods(
-    importDataTable = function(...) {
+    importDatatable = function(...) {
         #print("test")
         datatable_biotype = "mRNA expression data"
         datatable_name = "DU145-exp"
@@ -201,8 +201,37 @@ NaviCell$methods(
         data <- paste(data_header, data_file, sep="")
         #cat(data)
         
+        .self$incMessageId()
         list_param <- list(module='', args = list(datatable_biotype, datatable_name, "", data, emptyNamedList), msg_id = .self$msg_id, action = 'nv_import_datatables')
         str_data <- .self$makeData(.self$formatJson(list_param))
-        print(str_data)
+
+        .self$incMessageId()
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+        #print(.self$formatResponse(response))
+    }
+)
+
+
+NaviCell$methods(
+    readDatatable = function(fileName) {
+        mat <- as.matrix(read.table(fileName, header=T, row.names=1))
+        return(mat)
+    }
+)
+
+
+NaviCell$methods(
+    matrix2string = function(mat) {
+        header <- paste(colnames(mat), collapse='\t', sep="") 
+        string <- paste('genes\t', header, sep="")
+        string <- paste(string, '\n', sep="")
+        for (row in 1:nrow(mat)) {
+            gene_name <- paste(rownames(mat)[row], '\t', sep="")  
+            row_string <- paste(mat[row,], collapse='\t', sep="")
+            row_string <- paste(row_string, '\n', sep="")
+            string <- paste(string, gene_name, row_string, sep="")
+        }
+
+        return(string)
     }
 )
