@@ -12,7 +12,7 @@ NaviCell <- setRefClass(
         proxy_url = "character",
         map_url = "character",
         msg_id = "numeric",
-        session_id = "character"
+        session_id = "character",
         hugo_list = "vector"
     ),
 
@@ -155,6 +155,7 @@ NaviCell$methods(
         response <- .self$formatResponse(response)
         #message(response)
         response <- fromJSON(response)
+        .self$hugo_list <- response$data
         return(response$data)
     }
 )
@@ -185,35 +186,45 @@ NaviCell$methods(
     }
 )
 
-
 #### paste(readLines('data.txt'),collapse='\n')->s
 ### self._cli2srv('nv_import_datatables', '', [datatable_biotype, datatable_name, '', datatable_url_or_data, params])
 
 NaviCell$methods(
-    importDatatable = function(...) {
-        #print("test")
-        datatable_biotype = "mRNA expression data"
-        datatable_name = "DU145-exp"
-        params = array()
+    importDatatable = function(datatable_biotype, datatable_name, mat) {
+    "Import a datatable (matrix) in the current map session."
+        #datatable_biotype = "mRNA expression data"
+        #datatable_name = "DU145-exp"
 
-        data_file = paste(readLines('data.txt'),collapse='\n')
-        data_header = "@DATA\n"
-        data <- paste(data_header, data_file, sep="")
+        #data_file = paste(readLines('data.txt'),collapse='\n')
+        #data_header = "@DATA\n"
+        #data <- paste(data_header, data_file, sep="")
         #cat(data)
         
+        if (length(.self$hugo_list) == 0) {
+            hl <- n$getHugoList()
+        }
+        rownames(mat) %in% n$hugo_list -> idx 
+        if (sum(idx) < 1) {
+            warning("Error: no overlap between map and matrix HUGO gene symbols.")
+            return()
+        }
+
+        data_string <- n$matrix2string(mat[idx,])
+
         .self$incMessageId()
-        list_param <- list(module='', args = list(datatable_biotype, datatable_name, "", data, emptyNamedList), msg_id = .self$msg_id, action = 'nv_import_datatables')
+        list_param <- list(module='', args = list(datatable_biotype, datatable_name, "", data_string, emptyNamedList), msg_id = .self$msg_id, action = 'nv_import_datatables')
         str_data <- .self$makeData(.self$formatJson(list_param))
 
         .self$incMessageId()
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
-        #print(.self$formatResponse(response))
+        print(.self$formatResponse(response))
     }
 )
 
 
 NaviCell$methods(
     readDatatable = function(fileName) {
+    "Read a data file and create an R matrix. Returns a matrix object."
         mat <- as.matrix(read.table(fileName, header=T, row.names=1))
         return(mat)
     }
@@ -222,8 +233,9 @@ NaviCell$methods(
 
 NaviCell$methods(
     matrix2string = function(mat) {
+    "Convert an R matrix object to a formatted string (internal utility)."
         header <- paste(colnames(mat), collapse='\t', sep="") 
-        string <- paste('genes\t', header, sep="")
+        string <- paste('@DATA\ngenes\t', header, sep="")
         string <- paste(string, '\n', sep="")
         for (row in 1:nrow(mat)) {
             gene_name <- paste(rownames(mat)[row], '\t', sep="")  
