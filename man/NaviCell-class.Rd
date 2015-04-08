@@ -27,6 +27,8 @@ NaviCell reference class
 
 \item{\code{getModuleList(object, mod, zoom_level)}}{Return the module list of the current NaviCell map.}
 
+\item{\code{importDatatable(datatable_biotype, datatable_name, mat)}}{Import a datatable (matrix) in the current map session.}
+
 \item{\code{incMessageId(...)}}{Increase message ID counter.}
 
 \item{\code{launchBrowser(...)}}{Launch client browser and points to the default NaviCell map.}
@@ -34,6 +36,10 @@ NaviCell reference class
 \item{\code{listSessions(...)}}{List all NaviCell server sessions.}
 
 \item{\code{makeData(json_string)}}{Create NaviCell server command string from a list of parameters (internal utility).}
+
+\item{\code{matrix2string(mat)}}{Convert an R matrix object to a formatted string (internal utility).}
+
+\item{\code{readDatatable(fileName)}}{Read a data file and create an R matrix. Returns a matrix object.}
 
 \item{\code{setZoom(module, zoom_level)}}{Set a given zoom level on associated NaviCell map in browser.}
 }}
