@@ -217,7 +217,7 @@ NaviCell$methods(
 
         .self$incMessageId()
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -245,5 +245,15 @@ NaviCell$methods(
         }
 
         return(string)
+    }
+)
+
+NaviCell$methods(
+    datatableConfigSwitchSampleTab = function(datatable_name, datatable_parameter) {
+        .self$incMessageId()
+        list_param <- list(module='', args = array('switch_sample_tab', datatable_name, datatable_parameter), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
     }
 )
