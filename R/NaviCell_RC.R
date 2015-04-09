@@ -215,7 +215,7 @@ NaviCell$methods(
         }
         
         data_string <- n$matrix2string(mat_select)
-        print(data_string)
+        #print(data_string)
 
         .self$incMessageId()
         list_param <- list(module='', args = list(datatable_biotype, datatable_name, "", data_string, emptyNamedList), msg_id = .self$msg_id, action = 'nv_import_datatables')
@@ -288,6 +288,38 @@ NaviCell$methods(
         print(.self$formatResponse(response))
     }
 )
+
+NaviCell$methods(
+    mapStainingEditorSelectDatatable = function(datatable_name) {
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('select_datatable', datatable_name)), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    mapStainingEditorSelectSample = function(sample_name) {
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('select_sample', sample_name)), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    mapStainingEditorApply = function(...) {
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('apply')), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+
 
 
 
