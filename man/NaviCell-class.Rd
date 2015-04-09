@@ -6,13 +6,14 @@
 \alias{NaviCell-class}
 \title{NaviCell reference class}
 \description{
-NaviCell is a web-based environment for browsing and commenting very large
-molecular networks using Google Maps and for visualizing omics data on top of
+NaviCell (https://navicell.curie.fr) is a web-based environment for browsing, commenting and analyzing very large
+biological molecular networks using Google Maps and for visualizing 'omics' data on top of
 the network maps.
 NaviCell can also act as a server allowing to be remotely controlled through
 a REST API. A python and a R language bindings have been developped on top of
 the REST API to hide technical details and to provide a user's friendly
 interface. A Java binding has been initiated.
+This is the R binding implementation.
 }
 \section{Methods}{
 
