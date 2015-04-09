@@ -3,6 +3,15 @@ require(RCurl)
 
 #' NaviCell reference class
 #'
+#' NaviCell (https://navicell.curie.fr) is a web-based environment for browsing, commenting and analyzing very large
+#' biological molecular networks using Google Maps and for visualizing 'omics' data on top of
+#' the network maps.
+#' NaviCell can also act as a server allowing to be remotely controlled through
+#' a REST API. A python and a R language bindings have been developped on top of
+#' the REST API to hide technical details and to provide a user's friendly
+#' interface. A Java binding has been initiated. 
+#' This is the R binding implementation.
+
 NaviCell <- setRefClass(
     # class name
     "NaviCell",
@@ -192,30 +201,30 @@ NaviCell$methods(
 NaviCell$methods(
     importDatatable = function(datatable_biotype, datatable_name, mat) {
     "Import a datatable (matrix) in the current map session."
-        #datatable_biotype = "mRNA expression data"
-        #datatable_name = "DU145-exp"
 
-        #data_file = paste(readLines('data.txt'),collapse='\n')
-        #data_header = "@DATA\n"
-        #data <- paste(data_header, data_file, sep="")
-        #cat(data)
-        
+        # check if the field hugo_list is set
         if (length(.self$hugo_list) == 0) {
             hl <- n$getHugoList()
         }
+
+        # filter matrix on hugo_list
+        # abort if there is no overlap
         rownames(mat) %in% n$hugo_list -> idx 
         if (sum(idx) < 1) {
             warning("Error: no overlap between map and matrix HUGO gene symbols.")
             return()
         }
 
+        # select rows on hugo_list
+        # watch out: if matrix has 1 col, return type is vector, not matrix, so cast the return to matrix.
+        # watch out: when matrix as only one col. colname is lost with subselect, so set it back
         mat_select <- as.matrix(mat[idx,])
         if (ncol(mat) == 1) {
             colnames(mat_select) <- colnames(mat)
         }
         
         data_string <- n$matrix2string(mat_select)
-        print(data_string)
+        #print(data_string)
 
         .self$incMessageId()
         list_param <- list(module='', args = list(datatable_biotype, datatable_name, "", data_string, emptyNamedList), msg_id = .self$msg_id, action = 'nv_import_datatables')
@@ -223,7 +232,7 @@ NaviCell$methods(
 
         .self$incMessageId()
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -274,7 +283,7 @@ NaviCell$methods(
         list_param <- list(module='', args = array(c('switch_sample_tab', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -282,11 +291,10 @@ NaviCell$methods(
     datatableConfigSetStepCount = function(sample_or_group, datatable_parameter, datatable_name,  step_count) {
     "Set the step count parameter to a given value. sample_or_group = 'sample' or 'group'. parameter = 'shape' or 'color' or 'size' step_count = integer value."
         .self$incMessageId()
-        # "args": ["step_count_change", "sample", "color", "DU145-exp", 2, "", "", ""]}
         list_param <- list(module='', args = array(c('step_count_change', sample_or_group, datatable_parameter, datatable_name, step_count)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -294,11 +302,10 @@ NaviCell$methods(
     datatableConfigSetColorAt = function(datatable_name, sample_or_group, index, color_hex_value) {
     "Set the color value. sample_or_group = 'sample' or 'group'."
         .self$incMessageId()
-        # "args": ["set_input_color", "DU145-exp", "color", "sample", 1, "FFFFFF", "", ""]
         list_param <- list(module='', args = array(c('set_input_color', datatable_name, 'color', sample_or_group, index, color_hex_value)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -306,11 +313,10 @@ NaviCell$methods(
     datatableConfigSetValueAt = function(datatable_name, parameter_type, sample_or_group, index, continuous_value) {
     "Set a continuous value at a given index. sample_or_group = 'sample' or 'group'. parameter_type = 'size' or 'shape' or 'color'. "
         .self$incMessageId()
-        # "args": ["set_input_value", "DU145-exp", "color", "sample", 0, -1, "", ""]
         list_param <- list(module='', args = array(c('set_input_value', datatable_name, parameter_type, sample_or_group, index, continuous_value)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -321,38 +327,41 @@ NaviCell$methods(
         list_param <- list(module='', args = array(c('apply', datatable_name, parameter_type)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
 
 NaviCell$methods(
     mapStainingEditorSelectDatatable = function(datatable_name) {
+    "Select a datatable for the map staining editor."
         .self$incMessageId()
         list_param <- list(module='', args = array(c('select_datatable', datatable_name)), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
 NaviCell$methods(
     mapStainingEditorSelectSample = function(sample_name) {
+    "Select a sample for the map staining editor."
         .self$incMessageId()
         list_param <- list(module='', args = array(c('select_sample', sample_name)), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
 NaviCell$methods(
     mapStainingEditorApply = function(...) {
+    "Apply modifications for the map staining editor."
         .self$incMessageId()
         list_param <- list(module='', args = array(c('apply')), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 

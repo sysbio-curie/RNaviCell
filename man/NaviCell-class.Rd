@@ -6,7 +6,13 @@
 \alias{NaviCell-class}
 \title{NaviCell reference class}
 \description{
-NaviCell reference class
+NaviCell is a web-based environment for browsing and commenting very large
+molecular networks using Google Maps and for visualizing omics data on top of
+the network maps.
+NaviCell can also act as a server allowing to be remotely controlled through
+a REST API. A python and a R language bindings have been developped on top of
+the REST API to hide technical details and to provide a user's friendly
+interface. A Java binding has been initiated.
 }
 \section{Methods}{
 
@@ -14,6 +20,19 @@ NaviCell reference class
 \item{\code{attachLastSession(...)}}{Attach NaviCell handle to the last existing NaviCell Web Service session.}
 
 \item{\code{attachSession(session_id)}}{Attach a NaviCell server session ID.}
+
+\item{\code{datatableConfigApply(datatable_name, parameter_type)}}{Apply a configuration. parameter_type = 'size' or 'shape' or 'color'. }
+
+\item{\code{datatableConfigSetColorAt(datatable_name, sample_or_group, index,
+  color_hex_value)}}{Set the color value. sample_or_group = 'sample' or 'group'.}
+
+\item{\code{datatableConfigSetStepCount(sample_or_group, datatable_parameter,
+  datatable_name, step_count)}}{Set the step count parameter to a given value. sample_or_group = 'sample' or 'group'. parameter = 'shape' or 'color' or 'size' step_count = integer value.}
+
+\item{\code{datatableConfigSetValueAt(datatable_name, parameter_type, sample_or_group,
+  index, continuous_value)}}{Set a continuous value at a given index. sample_or_group = 'sample' or 'group'. parameter_type = 'size' or 'shape' or 'color'. }
+
+\item{\code{datatableConfigSwitchSampleTab(datatable_name, datatable_parameter)}}{Switch to configuration window 'sample' tab. Parameter = 'shape' or 'color' or 'size'.}
 
 \item{\code{formatJson(list_param)}}{Format list of parameters to NaviCell server compatible JSON format (internal utility).}
 
@@ -36,6 +55,12 @@ NaviCell reference class
 \item{\code{listSessions(...)}}{List all NaviCell server sessions.}
 
 \item{\code{makeData(json_string)}}{Create NaviCell server command string from a list of parameters (internal utility).}
+
+\item{\code{mapStainingEditorApply(...)}}{Apply modifications for the map staining editor.}
+
+\item{\code{mapStainingEditorSelectDatatable(datatable_name)}}{Select a datatable for the map staining editor.}
+
+\item{\code{mapStainingEditorSelectSample(sample_name)}}{Select a sample for the map staining editor.}
 
 \item{\code{matrix2string(mat)}}{Convert an R matrix object to a formatted string (internal utility).}
 
