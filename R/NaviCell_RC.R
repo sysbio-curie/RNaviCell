@@ -209,7 +209,13 @@ NaviCell$methods(
             return()
         }
 
-        data_string <- n$matrix2string(mat[idx,])
+        mat_select <- as.matrix(mat[idx,])
+        if (ncol(mat) == 1) {
+            colnames(mat_select) <- colnames(mat)
+        }
+        
+        data_string <- n$matrix2string(mat_select)
+        print(data_string)
 
         .self$incMessageId()
         list_param <- list(module='', args = list(datatable_biotype, datatable_name, "", data_string, emptyNamedList), msg_id = .self$msg_id, action = 'nv_import_datatables')
@@ -217,7 +223,7 @@ NaviCell$methods(
 
         .self$incMessageId()
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
-        #print(.self$formatResponse(response))
+        print(.self$formatResponse(response))
     }
 )
 
@@ -234,26 +240,54 @@ NaviCell$methods(
 NaviCell$methods(
     matrix2string = function(mat) {
     "Convert an R matrix object to a formatted string (internal utility)."
-        header <- paste(colnames(mat), collapse='\t', sep="") 
+        header = ""
+        if (nrow(mat) == 1) {
+            header <- paste(colnames(mat), sep="") 
+        }
+        else {
+            header <- paste(colnames(mat), collapse='\t', sep="") 
+        }
+
         string <- paste('@DATA\ngenes\t', header, sep="")
         string <- paste(string, '\n', sep="")
-        for (row in 1:nrow(mat)) {
+        nb_row = nrow(mat) 
+        for (row in 1:nb_row) {
             gene_name <- paste(rownames(mat)[row], '\t', sep="")  
-            row_string <- paste(mat[row,], collapse='\t', sep="")
+            row_string = ""
+            if (nb_row == 1) {
+                row_string <- paste(mat[row], sep="")
+            }
+            else {
+                row_string <- paste(mat[row,], collapse='\t', sep="")
+            }
             row_string <- paste(row_string, '\n', sep="")
             string <- paste(string, gene_name, row_string, sep="")
         }
-
         return(string)
     }
 )
 
 NaviCell$methods(
     datatableConfigSwitchSampleTab = function(datatable_name, datatable_parameter) {
+    "Switch to configuration window 'sample' tab. Parameter = 'shape' or 'color' or 'size'."
         .self$incMessageId()
-        list_param <- list(module='', args = array('switch_sample_tab', datatable_name, datatable_parameter), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        list_param <- list(module='', args = array(c('switch_sample_tab', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
         print(.self$formatResponse(response))
     }
 )
+
+NaviCell$methods(
+    datatableConfigSetStepCount = function(datatable_name, datatable_parameter, sample_or_group, step_count) {
+    "Switch to configuration window 'sample' tab. sample_or_group = 'sample' or 'group'. parameter = 'shape' or 'color' or 'size' step_count = integer value."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('step_count_change', sample_or_group, datatable_parameter, datatable_name, step_count)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+
+
