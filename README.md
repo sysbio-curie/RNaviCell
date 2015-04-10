@@ -1,4 +1,4 @@
-# R-NaviCell
+# RNaviCell
 
 [NaviCell](https://navicell.curie.fr) is a web tool for exploring large biological molecular interactions maps.
 
@@ -9,6 +9,6 @@ simple gene lists and clinical data) onto NaviCell network maps. We have
 developped a REST-like API  to automate the process and allow people to create
 and play with graphical representations. we are developping bindings to different popular languages in order to facilitate the development process. 
 
-R-NaviCell is the R implementation to access the NaviCell web service.
+RNaviCell is the R implementation to access the NaviCell web service.
 
-A step-by-step tutorial with a concrete biological example is available on the [wiki](https://github.com/eb00/R-NaviCell/wiki/Tutorial).
+A step-by-step tutorial with a concrete biological example is available on the [wiki](https://github.com/eb00/RNaviCell/wiki/Tutorial).
