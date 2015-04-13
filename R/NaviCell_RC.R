@@ -155,7 +155,7 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    getHugoList = function( module_name, zoom_level) {
+    getHugoList = function(module_name, zoom_level) {
     "Get the list of the HUGO gene symbols for the current map (the list is stored in the object field hugo_list."
         .self$incMessageId()
         list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_get_hugo_list')
@@ -365,7 +365,23 @@ NaviCell$methods(
     }
 )
 
+NaviCell$methods(
+    importSampleAnnotationFromFile = function(fileName) {
+        data_string <- paste(readLines(fileName, warn=F),collapse='\n')
+        if (substr(data_string, nchar(data_string), nchar(data_string)) != "\n") {
+            data_string <- paste(data_string, '\n', sep="")
+        }
+        data_string <- paste("@DATA\n", data_string, sep="")
+        .self$incMessageId()
+        list_param <- list(module='', args = list("import", data_string), msg_id = .self$msg_id, action = 'nv_sample_annotation_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+
+        .self$incMessageId()
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+        print(.self$formatResponse(response))
+    }
+)
 
 
 
-
+#  "args": ["select_annotation", "Ploidy", true],
