@@ -24,6 +24,7 @@ n$datatableConfigApply("DU145", "color")
 
 # select map staining as graphical representation for prostate cancer data
 # and show the results
+n$mapStainingEditorOpen()
 n$mapStainingEditorSelectDatatable('DU145')
 n$mapStainingEditorSelectSample('data')
 n$mapStainingEditorApply()

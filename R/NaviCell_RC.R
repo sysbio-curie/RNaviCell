@@ -387,7 +387,7 @@ NaviCell$methods(
     mapStainingEditorOpen = function(...) {
     "Open the map staining editor."
         .self$incMessageId()
-        list_param <- list(module='', args = array(c('open')), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
+        list_param <- list(module='', args = array('open'), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
         #print(.self$formatResponse(response))
@@ -395,7 +395,7 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    mapStainingEditorOpen = function(...) {
+    mapStainingEditorClose = function(...) {
     "Close the map staining editor."
         .self$incMessageId()
         list_param <- list(module='', args = array(c('close')), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
@@ -417,17 +417,6 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    mapStainingEditorCancel = function(...) {
-    "Cancel changes and close the map staining editor."
-        .self$incMessageId()
-        list_param <- list(module='', args = array(c('cancel')), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
-        str_data <- .self$makeData(.self$formatJson(list_param))
-        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        #print(.self$formatResponse(response))
-    }
-)
-
-NaviCell$methods(
     mapStainingEditorSetTransparency = function(transparency_value) {
     "Set the transparency value parameter for the map staining editor (integer value between 1 and 100)."
         .self$incMessageId()
@@ -439,16 +428,12 @@ NaviCell$methods(
 )
 
 
-
-
-
-
-
 #------------------------------------------------------------------------------
 #
 # Sample Annotation functions 
 #
 #------------------------------------------------------------------------------
+
 
 NaviCell$methods(
     importSampleAnnotationFromFile = function(fileName) {
@@ -509,7 +494,7 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    sampleAnnotationOpen = function(...) {
+    sampleAnnotationClose = function(...) {
     "Close sample annotation dialog."
         .self$incMessageId()
         list_param <- list(module='', args = list("close"), msg_id = .self$msg_id, action = 'nv_sample_annotation_perform')
@@ -521,9 +506,8 @@ NaviCell$methods(
     }
 )
 
-
 NaviCell$methods(
-    sampleAnnotationOpen = function(...) {
+    sampleAnnotationCancel = function(...) {
     "Cancel changes and close sample annotation dialog."
         .self$incMessageId()
         list_param <- list(module='', args = list("cancel"), msg_id = .self$msg_id, action = 'nv_sample_annotation_perform')
