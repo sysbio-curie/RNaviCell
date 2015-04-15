@@ -195,8 +195,6 @@ NaviCell$methods(
     }
 )
 
-#### paste(readLines('data.txt'),collapse='\n')->s
-### self._cli2srv('nv_import_datatables', '', [datatable_biotype, datatable_name, '', datatable_url_or_data, params])
 
 NaviCell$methods(
     importDatatable = function(datatable_biotype, datatable_name, mat) {
@@ -276,8 +274,28 @@ NaviCell$methods(
     }
 )
 
+
+#------------------------------------------------------------------------------
+#
+# Continuous Configuration Editor functions 
+#
+#------------------------------------------------------------------------------
+
+
 NaviCell$methods(
-    datatableConfigSwitchSampleTab = function(datatable_name, datatable_parameter) {
+    continuousConfigSwitchSampleTab = function(datatable_name, datatable_parameter) {
+    "Switch to configuration window 'sample' tab. Parameter = 'shape' or 'color' or 'size'."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('switch_sample_tab', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+
+NaviCell$methods(
+    continuousConfigSwitchSampleTab = function(datatable_name, datatable_parameter) {
     "Switch to configuration window 'sample' tab. Parameter = 'shape' or 'color' or 'size'."
         .self$incMessageId()
         list_param <- list(module='', args = array(c('switch_sample_tab', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
@@ -288,7 +306,7 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    datatableConfigSetStepCount = function(sample_or_group, datatable_parameter, datatable_name,  step_count) {
+    continuousConfigSetStepCount = function(sample_or_group, datatable_parameter, datatable_name,  step_count) {
     "Set the step count parameter to a given value. sample_or_group = 'sample' or 'group'. parameter = 'shape' or 'color' or 'size' step_count = integer value."
         .self$incMessageId()
         list_param <- list(module='', args = array(c('step_count_change', sample_or_group, datatable_parameter, datatable_name, step_count)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
@@ -299,7 +317,7 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    datatableConfigSetColorAt = function(datatable_name, sample_or_group, index, color_hex_value) {
+    continuousConfigSetColorAt = function(datatable_name, sample_or_group, index, color_hex_value) {
     "Set the color value. sample_or_group = 'sample' or 'group'."
         .self$incMessageId()
         list_param <- list(module='', args = array(c('set_input_color', datatable_name, 'color', sample_or_group, index, color_hex_value)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
@@ -310,7 +328,7 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    datatableConfigSetValueAt = function(datatable_name, parameter_type, sample_or_group, index, continuous_value) {
+    continuousConfigSetValueAt = function(datatable_name, parameter_type, sample_or_group, index, continuous_value) {
     "Set a continuous value at a given index. sample_or_group = 'sample' or 'group'. parameter_type = 'size' or 'shape' or 'color'. "
         .self$incMessageId()
         list_param <- list(module='', args = array(c('set_input_value', datatable_name, parameter_type, sample_or_group, index, continuous_value)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
@@ -321,7 +339,7 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    datatableConfigApply = function(datatable_name, parameter_type) {
+    continuousConfigApply = function(datatable_name, parameter_type) {
     "Apply a configuration. parameter_type = 'size' or 'shape' or 'color'. "
         .self$incMessageId()
         list_param <- list(module='', args = array(c('apply', datatable_name, parameter_type)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
