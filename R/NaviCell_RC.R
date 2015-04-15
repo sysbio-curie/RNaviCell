@@ -281,10 +281,99 @@ NaviCell$methods(
 #
 #------------------------------------------------------------------------------
 
+NaviCell$methods(
+    continuousConfigOpen = function(datatable_name, datatable_parameter) {
+    "Open continuous configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('open', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    continuousConfigClose = function(datatable_name, datatable_parameter) {
+    "Close continuous configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('close', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    continuousConfigApplyAndClose = function(datatable_name, datatable_parameter) {
+    "Apply changes and close continuous configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('apply_and_close', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    continuousConfigCancelAndClose = function(datatable_name, datatable_parameter) {
+    "Cancel changes and close continuous configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('cancel', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    continuousConfigSetAbsVal = function(datatable_parameter, datatable_name, checked) {
+    "Set absolute value mode for continuous configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size', checked = TRUE or FALSE."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_sample_absval', datatable_parameter, datatable_name, checked)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    continuousConfigSetSampleMethod = function(datatable_parameter, datatable_name, method_index) {
+    "Set the method used when multiple symbols map to the same entity. datatable_parameter = 'shape' or 'color' or 'size', method_index = integer."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_sample_method', datatable_parameter, datatable_name, method_index)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    continuousConfigSetGroupMethod = function(datatable_parameter, datatable_name, method_index) {
+    "Set the method used when multiple symbols map to the same entity. datatable_parameter = 'shape' or 'color' or 'size', method_index = integer."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_group_method', datatable_parameter, datatable_name, method_index)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    continuousConfigSetSelectionSize = function(sample_or_group, index, size) {
+    "Set the size selection to a given value for the 'size' parameter. sample_or_group = 'sample' or 'group', index = integer, value = integer."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_sample_method', datatable_parameter, datatable_name, method_index)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+
 
 NaviCell$methods(
     continuousConfigSwitchSampleTab = function(datatable_name, datatable_parameter) {
-    "Switch to configuration window 'sample' tab. Parameter = 'shape' or 'color' or 'size'."
+    "Switch continuous configuration editor window to 'sample' tab. Parameter = 'shape' or 'color' or 'size'."
         .self$incMessageId()
         list_param <- list(module='', args = array(c('switch_sample_tab', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
@@ -293,21 +382,21 @@ NaviCell$methods(
     }
 )
 
-
 NaviCell$methods(
-    continuousConfigSwitchSampleTab = function(datatable_name, datatable_parameter) {
-    "Switch to configuration window 'sample' tab. Parameter = 'shape' or 'color' or 'size'."
+    continuousConfigSwitchGroupTab = function(datatable_name, datatable_parameter) {
+    "Switch continuous configuration editor window to 'group' tab. Parameter = 'shape' or 'color' or 'size'."
         .self$incMessageId()
-        list_param <- list(module='', args = array(c('switch_sample_tab', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        list_param <- list(module='', args = array(c('switch_group_tab', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
         #print(.self$formatResponse(response))
     }
 )
+
 
 NaviCell$methods(
     continuousConfigSetStepCount = function(sample_or_group, datatable_parameter, datatable_name,  step_count) {
-    "Set the step count parameter to a given value. sample_or_group = 'sample' or 'group'. parameter = 'shape' or 'color' or 'size' step_count = integer value."
+    "Set continuous configuration step count parameter to a given value. sample_or_group = 'sample' or 'group'. parameter = 'shape' or 'color' or 'size' step_count = integer value."
         .self$incMessageId()
         list_param <- list(module='', args = array(c('step_count_change', sample_or_group, datatable_parameter, datatable_name, step_count)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
@@ -318,7 +407,7 @@ NaviCell$methods(
 
 NaviCell$methods(
     continuousConfigSetColorAt = function(datatable_name, sample_or_group, index, color_hex_value) {
-    "Set the color value. sample_or_group = 'sample' or 'group'."
+    "Set continuous configuration color value. sample_or_group = 'sample' or 'group'."
         .self$incMessageId()
         list_param <- list(module='', args = array(c('set_input_color', datatable_name, 'color', sample_or_group, index, color_hex_value)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
@@ -329,7 +418,7 @@ NaviCell$methods(
 
 NaviCell$methods(
     continuousConfigSetValueAt = function(datatable_name, parameter_type, sample_or_group, index, continuous_value) {
-    "Set a continuous value at a given index. sample_or_group = 'sample' or 'group'. parameter_type = 'size' or 'shape' or 'color'. "
+    "Set continuous configuration continuous value at a given index. sample_or_group = 'sample' or 'group'. parameter_type = 'size' or 'shape' or 'color'. "
         .self$incMessageId()
         list_param <- list(module='', args = array(c('set_input_value', datatable_name, parameter_type, sample_or_group, index, continuous_value)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
@@ -340,7 +429,7 @@ NaviCell$methods(
 
 NaviCell$methods(
     continuousConfigApply = function(datatable_name, parameter_type) {
-    "Apply a configuration. parameter_type = 'size' or 'shape' or 'color'. "
+    "Apply changes to the continuous configuration editor. parameter_type = 'size' or 'shape' or 'color'. "
         .self$incMessageId()
         list_param <- list(module='', args = array(c('apply', datatable_name, parameter_type)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
