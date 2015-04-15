@@ -339,7 +339,6 @@ NaviCell$methods(
 #------------------------------------------------------------------------------
 
 
-
 NaviCell$methods(
     mapStainingEditorSelectDatatable = function(datatable_name) {
     "Select a datatable for the map staining editor."
@@ -372,6 +371,77 @@ NaviCell$methods(
         #print(.self$formatResponse(response))
     }
 )
+
+NaviCell$methods(
+    mapStainingEditorCancel = function(...) {
+    "Cancel modifications and close the map staining editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('cancel')), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    mapStainingEditorOpen = function(...) {
+    "Open the map staining editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('open')), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    mapStainingEditorOpen = function(...) {
+    "Close the map staining editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('close')), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    mapStainingEditorApplyAndClose = function(...) {
+    "Apply changes and close the map staining editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('apply_and_close')), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    mapStainingEditorCancel = function(...) {
+    "Cancel changes and close the map staining editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('cancel')), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    mapStainingEditorSetTransparency = function(transparency_value) {
+    "Set the transparency value parameter for the map staining editor (integer value between 1 and 100)."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_transparency'), transparency_value), msg_id = .self$msg_id, action = 'nv_map_staining_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+
+
+
+
 
 
 #------------------------------------------------------------------------------
