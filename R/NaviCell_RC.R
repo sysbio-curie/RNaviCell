@@ -332,6 +332,14 @@ NaviCell$methods(
 )
 
 
+#------------------------------------------------------------------------------
+#
+# Map Staining  functions 
+#
+#------------------------------------------------------------------------------
+
+
+
 NaviCell$methods(
     mapStainingEditorSelectDatatable = function(datatable_name) {
     "Select a datatable for the map staining editor."
@@ -365,6 +373,13 @@ NaviCell$methods(
     }
 )
 
+
+#------------------------------------------------------------------------------
+#
+# Sample Annotation functions 
+#
+#------------------------------------------------------------------------------
+
 NaviCell$methods(
     importSampleAnnotationFromFile = function(fileName) {
         data_string <- paste(readLines(fileName, warn=F),collapse='\n')
@@ -381,8 +396,6 @@ NaviCell$methods(
         #print(.self$formatResponse(response))
     }
 )
-
-#  "args": ["select_annotation", "Ploidy", true],
 
 NaviCell$methods(
     sampleAnnotationSelectAnnotation = function(annotation_name, true_or_false) {
@@ -408,5 +421,46 @@ NaviCell$methods(
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
         #print(.self$formatResponse(response))
 
+    }
+)
+
+NaviCell$methods(
+    sampleAnnotationOpen = function(...) {
+    "Open sample annotation dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = list("open"), msg_id = .self$msg_id, action = 'nv_sample_annotation_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+
+        .self$incMessageId()
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+        #print(.self$formatResponse(response))
+
+    }
+)
+
+NaviCell$methods(
+    sampleAnnotationOpen = function(...) {
+    "Close sample annotation dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = list("close"), msg_id = .self$msg_id, action = 'nv_sample_annotation_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+
+        .self$incMessageId()
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+        #print(.self$formatResponse(response))
+    }
+)
+
+
+NaviCell$methods(
+    sampleAnnotationOpen = function(...) {
+    "Cancel changes and close sample annotation dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = list("cancel"), msg_id = .self$msg_id, action = 'nv_sample_annotation_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+
+        .self$incMessageId()
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+        #print(.self$formatResponse(response))
     }
 )
