@@ -274,6 +274,125 @@ NaviCell$methods(
     }
 )
 
+
+#------------------------------------------------------------------------------
+#
+# Glyph Editor functions 
+#
+#------------------------------------------------------------------------------
+
+NaviCell$methods(
+    glyphEditorOpen = function(glyph_num) {
+    "Open the glyph editor. glyph_num = glyph number"
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('open', glyph_num)), msg_id = .self$msg_id, action = 'nv_glyph_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    glyphEditorClose = function(glyph_num) {
+    "Close the glyph editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('close', glyph_num)), msg_id = .self$msg_id, action = 'nv_glyph_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    glyphEditorApply = function(glyph_num) {
+    "Apply changes in the glyph editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('apply', glyph_num)), msg_id = .self$msg_id, action = 'nv_glyph_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    glyphEditorApplyAndClose = function(glyph_num) {
+    "Apply changes and close the glyph editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('apply_and_close', glyph_num)), msg_id = .self$msg_id, action = 'nv_glyph_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    glyphEditorCancel = function(glyph_num) {
+    "Cancel changes and close the glyph editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('cancel', glyph_num)), msg_id = .self$msg_id, action = 'nv_glyph_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    glyphEditorSelectSample = function(glyph_num, sample_name) {
+    "Select sample or group in the glyph editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('select_sample', glyph_num, sample_name)), msg_id = .self$msg_id, action = 'nv_glyph_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    glyphEditorSelectShapeDatatable = function(glyph_num, datatable_name) {
+    "Select datatable for glyph shape in the glyph editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('select_datatable_shape', glyph_num, datatable_name)), msg_id = .self$msg_id, action = 'nv_glyph_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    glyphEditorSelectColorDatatable = function(glyph_num, datatable_name) {
+    "Select datatable for glyph color in the glyph editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('select_datatable_color', glyph_num, datatable_name)), msg_id = .self$msg_id, action = 'nv_glyph_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    glyphEditorSelectSizeDatatable = function(glyph_num, datatable_name) {
+    "Select datatable for glyph size in the glyph editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('select_datatable_size', glyph_num, datatable_name)), msg_id = .self$msg_id, action = 'nv_glyph_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    glyphEditorSetTransparency = function(glyph_num, value) {
+    "Set transparency parameter in the glyph editor. value = integer between 1 and 100."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_transparency', glyph_num, value)), msg_id = .self$msg_id, action = 'nv_glyph_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+
+
 #------------------------------------------------------------------------------
 #
 # Barplot Editor functions 
