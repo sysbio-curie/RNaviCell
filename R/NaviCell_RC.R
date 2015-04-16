@@ -359,16 +359,27 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    continuousConfigSetSelectionSize = function(sample_or_group, index, size) {
-    "Set the size selection to a given value for the 'size' parameter. sample_or_group = 'sample' or 'group', index = integer, value = integer."
+    continuousConfigSetSelectionSize = function(datatable_name, sample_or_group, index, size) {
+    "Set the size selection to a given value for the 'size' parameter. sample_or_group = 'sample' or 'group', index = integer, size = integer."
         .self$incMessageId()
-        list_param <- list(module='', args = array(c('set_sample_method', datatable_parameter, datatable_name, method_index)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        list_param <- list(module='', args = array(c('set_select_size', datatable_name, "size", sample_or_group, index, size)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
+
+NaviCell$methods(
+    continuousConfigSetSelectionShape = function(datatable_name, sample_or_group, index, shape) {
+    "Set the shape selection to a given value for the 'shape' parameter. sample_or_group = 'sample' or 'group', index = integer, shape = integer."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_select_shape', datatable_name, "shape", sample_or_group, index, shape)), msg_id = .self$msg_id, action = 'nv_display_continuous_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
 
 
 NaviCell$methods(
