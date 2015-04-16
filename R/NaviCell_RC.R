@@ -274,6 +274,133 @@ NaviCell$methods(
     }
 )
 
+#------------------------------------------------------------------------------
+#
+# Barplot Editor functions 
+#
+#------------------------------------------------------------------------------
+
+NaviCell$methods(
+    barplotEditorOpen = function(...) {
+    "Open the barplot editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('open'), msg_id = .self$msg_id, action = 'nv_barplot_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    barplotEditorClose = function(...) {
+    "Close the barplot editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('close'), msg_id = .self$msg_id, action = 'nv_barplot_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    barplotEditorApply = function(...) {
+    "Apply changes for the barplot editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('apply'), msg_id = .self$msg_id, action = 'nv_barplot_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    barplotEditorApplyAndClose = function(...) {
+    "Apply changes and close the barplot editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('apply_and_close'), msg_id = .self$msg_id, action = 'nv_barplot_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    barplotEditorCancel = function(...) {
+    "Cancel changes and close the barplot editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('cancel'), msg_id = .self$msg_id, action = 'nv_barplot_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    barplotEditorSelectSample = function(col_num, sample_name) {
+    "Select a sample or a group in the barplot editor. col_num = column index number, sample_name = sample or group name"
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('select_sample', col_num, sample_name)), msg_id = .self$msg_id, action = 'nv_barplot_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    barplotEditorSelectDatatable = function(datatable_name) {
+    "Select a datatable in the barplot editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('select_datatable', datatable_name)), msg_id = .self$msg_id, action = 'nv_barplot_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    barplotEditorClearSamples = function(...) {
+    "Clear all samples in the barplot editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('clear_samples'), msg_id = .self$msg_id, action = 'nv_barplot_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    barplotEditorSelectAllSamples = function(...) {
+    "Select all samples in the barplot editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('all_samples'), msg_id = .self$msg_id, action = 'nv_barplot_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    barplotEditorSelectAllGroups = function(...) {
+    "Select all groups in the barplot editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('all_groups'), msg_id = .self$msg_id, action = 'nv_barplot_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    barplotEditorSetTransparency = function(value) {
+    "Select transparency parameter in the barplot editor. value = integer between 1 and 100"
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_transparency', value)), msg_id = .self$msg_id, action = 'nv_barplot_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
 
 #------------------------------------------------------------------------------
 #
@@ -288,7 +415,7 @@ NaviCell$methods(
         list_param <- list(module='', args = array('open'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -299,7 +426,7 @@ NaviCell$methods(
         list_param <- list(module='', args = array('close'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -310,7 +437,7 @@ NaviCell$methods(
         list_param <- list(module='', args = array('cancel'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -321,7 +448,7 @@ NaviCell$methods(
         list_param <- list(module='', args = array('apply'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -332,7 +459,7 @@ NaviCell$methods(
         list_param <- list(module='', args = array('apply_and_close'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -343,7 +470,7 @@ NaviCell$methods(
         list_param <- list(module='', args = array(c('select_sample', col_num, sample_name)), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -354,7 +481,7 @@ NaviCell$methods(
         list_param <- list(module='', args = array(c('select_datatable', row_num, datatable_name)), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -365,7 +492,7 @@ NaviCell$methods(
         list_param <- list(module='', args = array('clear_samples'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -376,7 +503,7 @@ NaviCell$methods(
         list_param <- list(module='', args = array('all_samples'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -387,7 +514,7 @@ NaviCell$methods(
         list_param <- list(module='', args = array('all_groups'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
@@ -398,7 +525,7 @@ NaviCell$methods(
         list_param <- list(module='', args = array(c('set_transparency', value)), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
         str_data <- .self$makeData(.self$formatJson(list_param))
         response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        print(.self$formatResponse(response))
+        #print(.self$formatResponse(response))
     }
 )
 
