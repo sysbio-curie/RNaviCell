@@ -277,6 +277,133 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
+#  Drawing Configuration Dialog functions 
+#
+#------------------------------------------------------------------------------
+
+NaviCell$methods(
+    drawingConfigOpen = function(...) {
+    "Open drawing configuration dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('open'), msg_id = .self$msg_id, action = 'nv_drawing_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    drawingConfigClose = function(...) {
+    "Close drawing configuration dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('close'), msg_id = .self$msg_id, action = 'nv_drawing_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    drawingConfigApply = function(...) {
+    "Apply changes to drawing configuration dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('apply'), msg_id = .self$msg_id, action = 'nv_drawing_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    drawingConfigApplyAndClose = function(...) {
+    "Apply changes to drawing configuration and close dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('apply_and_close'), msg_id = .self$msg_id, action = 'nv_drawing_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    drawingConfigCancel = function(...) {
+    "Cancel changes to drawing configuration dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('cancel'), msg_id = .self$msg_id, action = 'nv_drawing_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    drawingConfigSelectHeatmap = function(checked) {
+    "Select heatmap display in drawing configuration dialog. checked = TRUE or FALSE."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('select_heatmap', checked)), msg_id = .self$msg_id, action = 'nv_drawing_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    drawingConfigSelectBarplot = function(checked) {
+    "Select barplot display in drawing configuration dialog. checked = TRUE or FALSE."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('select_barplot', checked)), msg_id = .self$msg_id, action = 'nv_drawing_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    drawingConfigSelectGlyph = function(glyph_num, checked) {
+    "Select glyph display in drawing configuration dialog. glyph_num = glyph number, checked = TRUE or FALSE."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('select_glyph', glyph_num, checked)), msg_id = .self$msg_id, action = 'nv_drawing_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    drawingConfigSelectMapStaining = function(checked) {
+    "Select map staining display in drawing configuration dialog. checked = TRUE or FALSE."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('select_map_staining', checked)), msg_id = .self$msg_id, action = 'nv_drawing_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    drawingConfigSelectDisplayAllGenes= function(...) {
+    "Select 'Display all genes' option in drawing configuration dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('display_all_genes'), msg_id = .self$msg_id, action = 'nv_drawing_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    drawingConfigSelectDisplaySelectedGenes= function(...) {
+    "Select 'Display selected genes' option in drawing configuration dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('display_selected_genes'), msg_id = .self$msg_id, action = 'nv_drawing_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+#------------------------------------------------------------------------------
+#
 #  MyData Dialog functions 
 #
 #------------------------------------------------------------------------------
