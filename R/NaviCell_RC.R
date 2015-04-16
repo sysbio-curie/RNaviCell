@@ -277,6 +277,134 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
+# Heatmap Editor functions 
+#
+#------------------------------------------------------------------------------
+
+NaviCell$methods(
+    heatmapEditorOpen = function(...) {
+    "Open the heatmap editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('open'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    heatmapEditorClose = function(...) {
+    "Close the heatmap editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('close'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    heatmapEditorCancel = function(...) {
+    "Cancel changes and close the heatmap editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('cancel'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    heatmapEditorApply = function(...) {
+    "Apply changes for the heatmap editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('apply'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    heatmapEditorApplyAndClose = function(...) {
+    "Apply changes and close the heatmap editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('apply_and_close'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    heatmapEditorSelectSample = function(col_num, sample_name) {
+    "Select sample or group in heatmap editor. col_num = editor column number, sample_name = sample or group name."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('select_sample', col_num, sample_name)), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    heatmapEditorSelectDatatable = function(row_num, datatable_name) {
+    "Select datatable in heatmap editor. row_num = editor row number."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('select_datatable', row_num, datatable_name)), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    heatmapEditorClearSamples = function(...) {
+    "Clear all samples in heatmap editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('clear_samples'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    heatmapEditorSelectAllSamples = function(...) {
+    "Select all samples in heatmap editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('all_samples'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    heatmapEditorSelectAllGroups = function(...) {
+    "Select all groups in heatmap editor."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('all_groups'), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    heatmapEditorSetTransparency = function(value) {
+    "Set transparency parameter in heatmap editor. value = integer between 1 and 100."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_transparency', value)), msg_id = .self$msg_id, action = 'nv_heatmap_editor_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+
+#------------------------------------------------------------------------------
+#
 # Continuous Configuration Editor functions 
 #
 #------------------------------------------------------------------------------
