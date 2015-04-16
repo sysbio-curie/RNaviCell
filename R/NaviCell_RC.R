@@ -277,6 +277,90 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
+#  MyData Dialog functions 
+#
+#------------------------------------------------------------------------------
+
+NaviCell$methods(
+    mydataDialogOpen = function(...) {
+    "Open MyData Dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('open'), msg_id = .self$msg_id, action = 'nv_mydata_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    mydataDialogClose = function(...) {
+    "Close MyData Dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('close'), msg_id = .self$msg_id, action = 'nv_mydata_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    mydataDialogSetDatatables = function(...) {
+    "Set Datatables tab active for MyData Dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('select_datatables'), msg_id = .self$msg_id, action = 'nv_mydata_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    mydataDialogSetSamples = function(...) {
+    "Set Samples tab active for MyData Dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('select_samples'), msg_id = .self$msg_id, action = 'nv_mydata_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    mydataDialogSetGenes = function(...) {
+    "Set Genes tab active for MyData Dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('select_genes'), msg_id = .self$msg_id, action = 'nv_mydata_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    mydataDialogSetGroups = function(...) {
+    "Set Groups tab active for MyData Dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('select_groups'), msg_id = .self$msg_id, action = 'nv_mydata_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    mydataDialogSetModules = function(...) {
+    "Set Modules tab active for MyData Dialog."
+        .self$incMessageId()
+        list_param <- list(module='', args = array('select_modules'), msg_id = .self$msg_id, action = 'nv_mydata_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        #print(.self$formatResponse(response))
+    }
+)
+
+
+#------------------------------------------------------------------------------
+#
 # Glyph Editor functions 
 #
 #------------------------------------------------------------------------------

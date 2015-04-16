@@ -22,18 +22,62 @@ This is the R binding implementation.
 
 \item{\code{attachSession(session_id)}}{Attach a NaviCell server session ID.}
 
-\item{\code{datatableConfigApply(datatable_name, parameter_type)}}{Apply a configuration. parameter_type = 'size' or 'shape' or 'color'. }
+\item{\code{barplotEditorApply(...)}}{Apply changes for the barplot editor.}
 
-\item{\code{datatableConfigSetColorAt(datatable_name, sample_or_group, index,
-  color_hex_value)}}{Set the color value. sample_or_group = 'sample' or 'group'.}
+\item{\code{barplotEditorApplyAndClose(...)}}{Apply changes and close the barplot editor.}
 
-\item{\code{datatableConfigSetStepCount(sample_or_group, datatable_parameter,
-  datatable_name, step_count)}}{Set the step count parameter to a given value. sample_or_group = 'sample' or 'group'. parameter = 'shape' or 'color' or 'size' step_count = integer value.}
+\item{\code{barplotEditorCancel(...)}}{Cancel changes and close the barplot editor.}
 
-\item{\code{datatableConfigSetValueAt(datatable_name, parameter_type, sample_or_group,
-  index, continuous_value)}}{Set a continuous value at a given index. sample_or_group = 'sample' or 'group'. parameter_type = 'size' or 'shape' or 'color'. }
+\item{\code{barplotEditorClearSamples(...)}}{Clear all samples in the barplot editor.}
 
-\item{\code{datatableConfigSwitchSampleTab(datatable_name, datatable_parameter)}}{Switch to configuration window 'sample' tab. Parameter = 'shape' or 'color' or 'size'.}
+\item{\code{barplotEditorClose(...)}}{Close the barplot editor.}
+
+\item{\code{barplotEditorOpen(...)}}{Open the barplot editor.}
+
+\item{\code{barplotEditorSelectAllGroups(...)}}{Select all groups in the barplot editor.}
+
+\item{\code{barplotEditorSelectAllSamples(...)}}{Select all samples in the barplot editor.}
+
+\item{\code{barplotEditorSelectDatatable(datatable_name)}}{Select a datatable in the barplot editor.}
+
+\item{\code{barplotEditorSelectSample(col_num, sample_name)}}{Select a sample or a group in the barplot editor. col_num = column index number, sample_name = sample or group name}
+
+\item{\code{barplotEditorSetTransparency(value)}}{Select transparency parameter in the barplot editor. value = integer between 1 and 100}
+
+\item{\code{continuousConfigApply(datatable_name, parameter_type)}}{Apply changes to the continuous configuration editor. parameter_type = 'size' or 'shape' or 'color'. }
+
+\item{\code{continuousConfigApplyAndClose(datatable_name, datatable_parameter)}}{Apply changes and close continuous configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'.}
+
+\item{\code{continuousConfigCancelAndClose(datatable_name, datatable_parameter)}}{Cancel changes and close continuous configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'.}
+
+\item{\code{continuousConfigClose(datatable_name, datatable_parameter)}}{Close continuous configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'.}
+
+\item{\code{continuousConfigOpen(datatable_name, datatable_parameter)}}{Open continuous configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'.}
+
+\item{\code{continuousConfigSetAbsVal(datatable_parameter, datatable_name, checked)}}{Set absolute value mode for continuous configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size', checked = TRUE or FALSE.}
+
+\item{\code{continuousConfigSetColorAt(datatable_name, sample_or_group, index,
+  color_hex_value)}}{Set continuous configuration color value. sample_or_group = 'sample' or 'group'.}
+
+\item{\code{continuousConfigSetGroupMethod(datatable_parameter, datatable_name,
+  method_index)}}{Set the method used when multiple symbols map to the same entity. datatable_parameter = 'shape' or 'color' or 'size', method_index = integer.}
+
+\item{\code{continuousConfigSetSampleMethod(datatable_parameter, datatable_name,
+  method_index)}}{Set the method used when multiple symbols map to the same entity. datatable_parameter = 'shape' or 'color' or 'size', method_index = integer.}
+
+\item{\code{continuousConfigSetSelectionShape(datatable_name, sample_or_group, index, shape)}}{Set the shape selection to a given value for the 'shape' parameter. sample_or_group = 'sample' or 'group', index = integer, shape = integer.}
+
+\item{\code{continuousConfigSetSelectionSize(datatable_name, sample_or_group, index, size)}}{Set the size selection to a given value for the 'size' parameter. sample_or_group = 'sample' or 'group', index = integer, size = integer.}
+
+\item{\code{continuousConfigSetStepCount(sample_or_group, datatable_parameter,
+  datatable_name, step_count)}}{Set continuous configuration step count parameter to a given value. sample_or_group = 'sample' or 'group'. parameter = 'shape' or 'color' or 'size' step_count = integer value.}
+
+\item{\code{continuousConfigSetValueAt(datatable_name, parameter_type, sample_or_group,
+  index, continuous_value)}}{Set continuous configuration continuous value at a given index. sample_or_group = 'sample' or 'group'. parameter_type = 'size' or 'shape' or 'color'. }
+
+\item{\code{continuousConfigSwitchGroupTab(datatable_name, datatable_parameter)}}{Switch continuous configuration editor window to 'group' tab. Parameter = 'shape' or 'color' or 'size'.}
+
+\item{\code{continuousConfigSwitchSampleTab(datatable_name, datatable_parameter)}}{Switch continuous configuration editor window to 'sample' tab. Parameter = 'shape' or 'color' or 'size'.}
 
 \item{\code{formatJson(list_param)}}{Format list of parameters to NaviCell server compatible JSON format (internal utility).}
 
@@ -47,6 +91,48 @@ This is the R binding implementation.
 
 \item{\code{getModuleList(object, mod, zoom_level)}}{Return the module list of the current NaviCell map.}
 
+\item{\code{glyphEditorApply(glyph_num)}}{Apply changes in the glyph editor.}
+
+\item{\code{glyphEditorApplyAndClose(glyph_num)}}{Apply changes and close the glyph editor.}
+
+\item{\code{glyphEditorCancel(glyph_num)}}{Cancel changes and close the glyph editor.}
+
+\item{\code{glyphEditorClose(glyph_num)}}{Close the glyph editor.}
+
+\item{\code{glyphEditorOpen(glyph_num)}}{Open the glyph editor. glyph_num = glyph number}
+
+\item{\code{glyphEditorSelectColorDatatable(glyph_num, datatable_name)}}{Select datatable for glyph color in the glyph editor.}
+
+\item{\code{glyphEditorSelectSample(glyph_num, sample_name)}}{Select sample or group in the glyph editor.}
+
+\item{\code{glyphEditorSelectShapeDatatable(glyph_num, datatable_name)}}{Select datatable for glyph shape in the glyph editor.}
+
+\item{\code{glyphEditorSelectSizeDatatable(glyph_num, datatable_name)}}{Select datatable for glyph size in the glyph editor.}
+
+\item{\code{glyphEditorSetTransparency(glyph_num, value)}}{Set transparency parameter in the glyph editor. value = integer between 1 and 100.}
+
+\item{\code{heatmapEditorApply(...)}}{Apply changes for the heatmap editor.}
+
+\item{\code{heatmapEditorApplyAndClose(...)}}{Apply changes and close the heatmap editor.}
+
+\item{\code{heatmapEditorCancel(...)}}{Cancel changes and close the heatmap editor.}
+
+\item{\code{heatmapEditorClearSamples(...)}}{Clear all samples in heatmap editor.}
+
+\item{\code{heatmapEditorClose(...)}}{Close the heatmap editor.}
+
+\item{\code{heatmapEditorOpen(...)}}{Open the heatmap editor.}
+
+\item{\code{heatmapEditorSelectAllGroups(...)}}{Select all groups in heatmap editor.}
+
+\item{\code{heatmapEditorSelectAllSamples(...)}}{Select all samples in heatmap editor.}
+
+\item{\code{heatmapEditorSelectDatatable(row_num, datatable_name)}}{Select datatable in heatmap editor. row_num = editor row number.}
+
+\item{\code{heatmapEditorSelectSample(col_num, sample_name)}}{Select sample or group in heatmap editor. col_num = editor column number, sample_name = sample or group name.}
+
+\item{\code{heatmapEditorSetTransparency(value)}}{Set transparency parameter in heatmap editor. value = integer between 1 and 100.}
+
 \item{\code{importDatatable(datatable_biotype, datatable_name, mat)}}{Import a datatable (matrix) in the current map session.}
 
 \item{\code{incMessageId(...)}}{Increase message ID counter.}
@@ -59,13 +145,33 @@ This is the R binding implementation.
 
 \item{\code{mapStainingEditorApply(...)}}{Apply modifications for the map staining editor.}
 
+\item{\code{mapStainingEditorApplyAndClose(...)}}{Apply changes and close the map staining editor.}
+
+\item{\code{mapStainingEditorCancel(...)}}{Cancel modifications and close the map staining editor.}
+
+\item{\code{mapStainingEditorClose(...)}}{Close the map staining editor.}
+
+\item{\code{mapStainingEditorOpen(...)}}{Open the map staining editor.}
+
 \item{\code{mapStainingEditorSelectDatatable(datatable_name)}}{Select a datatable for the map staining editor.}
 
 \item{\code{mapStainingEditorSelectSample(sample_name)}}{Select a sample for the map staining editor.}
 
+\item{\code{mapStainingEditorSetTransparency(transparency_value)}}{Set the transparency value parameter for the map staining editor (integer value between 1 and 100).}
+
 \item{\code{matrix2string(mat)}}{Convert an R matrix object to a formatted string (internal utility).}
 
 \item{\code{readDatatable(fileName)}}{Read a data file and create an R matrix. Returns a matrix object.}
+
+\item{\code{sampleAnnotationApply(...)}}{Apply the modifications done on a sample annotation table.}
+
+\item{\code{sampleAnnotationCancel(...)}}{Cancel changes and close sample annotation dialog.}
+
+\item{\code{sampleAnnotationClose(...)}}{Close sample annotation dialog.}
+
+\item{\code{sampleAnnotationOpen(...)}}{Open sample annotation dialog.}
+
+\item{\code{sampleAnnotationSelectAnnotation(annotation_name, true_or_false)}}{Select or un-select an annotation for creating groups from a sample annotation table. true_or_false = TRUE, select, true_or_false = FALSE, un-select.}
 
 \item{\code{setZoom(module, zoom_level)}}{Set a given zoom level on associated NaviCell map in browser.}
 }}
