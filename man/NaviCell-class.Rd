@@ -79,6 +79,28 @@ This is the R binding implementation.
 
 \item{\code{continuousConfigSwitchSampleTab(datatable_name, datatable_parameter)}}{Switch continuous configuration editor window to 'sample' tab. Parameter = 'shape' or 'color' or 'size'.}
 
+\item{\code{drawingConfigApply(...)}}{Apply changes to drawing configuration dialog.}
+
+\item{\code{drawingConfigApplyAndClose(...)}}{Apply changes to drawing configuration and close dialog.}
+
+\item{\code{drawingConfigCancel(...)}}{Cancel changes to drawing configuration dialog.}
+
+\item{\code{drawingConfigClose(...)}}{Close drawing configuration dialog.}
+
+\item{\code{drawingConfigOpen(...)}}{Open drawing configuration dialog.}
+
+\item{\code{drawingConfigSelectBarplot(checked)}}{Select barplot display in drawing configuration dialog. checked = TRUE or FALSE.}
+
+\item{\code{drawingConfigSelectDisplayAllGenes(...)}}{Select 'Display all genes' option in drawing configuration dialog.}
+
+\item{\code{drawingConfigSelectDisplaySelectedGenes(...)}}{Select 'Display selected genes' option in drawing configuration dialog.}
+
+\item{\code{drawingConfigSelectGlyph(glyph_num, checked)}}{Select glyph display in drawing configuration dialog. glyph_num = glyph number, checked = TRUE or FALSE.}
+
+\item{\code{drawingConfigSelectHeatmap(checked)}}{Select heatmap display in drawing configuration dialog. checked = TRUE or FALSE.}
+
+\item{\code{drawingConfigSelectMapStaining(checked)}}{Select map staining display in drawing configuration dialog. checked = TRUE or FALSE.}
+
 \item{\code{formatJson(list_param)}}{Format list of parameters to NaviCell server compatible JSON format (internal utility).}
 
 \item{\code{formatResponse(response)}}{Format response obtained from the RCurl 'postForm' command (internal utility).}
@@ -161,6 +183,20 @@ This is the R binding implementation.
 
 \item{\code{matrix2string(mat)}}{Convert an R matrix object to a formatted string (internal utility).}
 
+\item{\code{mydataDialogClose(...)}}{Close MyData Dialog.}
+
+\item{\code{mydataDialogOpen(...)}}{Open MyData Dialog.}
+
+\item{\code{mydataDialogSetDatatables(...)}}{Set Datatables tab active for MyData Dialog.}
+
+\item{\code{mydataDialogSetGenes(...)}}{Set Genes tab active for MyData Dialog.}
+
+\item{\code{mydataDialogSetGroups(...)}}{Set Groups tab active for MyData Dialog.}
+
+\item{\code{mydataDialogSetModules(...)}}{Set Modules tab active for MyData Dialog.}
+
+\item{\code{mydataDialogSetSamples(...)}}{Set Samples tab active for MyData Dialog.}
+
 \item{\code{readDatatable(fileName)}}{Read a data file and create an R matrix. Returns a matrix object.}
 
 \item{\code{sampleAnnotationApply(...)}}{Apply the modifications done on a sample annotation table.}
@@ -174,5 +210,34 @@ This is the R binding implementation.
 \item{\code{sampleAnnotationSelectAnnotation(annotation_name, true_or_false)}}{Select or un-select an annotation for creating groups from a sample annotation table. true_or_false = TRUE, select, true_or_false = FALSE, un-select.}
 
 \item{\code{setZoom(module, zoom_level)}}{Set a given zoom level on associated NaviCell map in browser.}
+
+\item{\code{unorderedConfigApply(datatable_name, datatable_parameter)}}{Apply changes to unordered discrete configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'.}
+
+\item{\code{unorderedConfigApplyAndClose(datatable_name, datatable_parameter)}}{Apply changes to unordered discrete configuration editor for a given type of parameter, and close the window. datatable_parameter = 'shape' or 'color' or 'size'.}
+
+\item{\code{unorderedConfigClose(datatable_name, datatable_parameter)}}{Open unordered discrete configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'.}
+
+\item{\code{unorderedConfigOpen(datatable_name, datatable_parameter)}}{Open unordered discrete configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'.}
+
+\item{\code{unorderedConfigSetAdvancedConfig(datatable_name, datatable_parameter, checked)}}{Open/close advanced configuration for unordered discrete configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'.}
+
+\item{\code{unorderedConfigSetDiscreteColor(datatable_name, sample_or_group, index, color)}}{Set color value for unordered discrete configuration editor. sample_or_group = 'sample' or 'group', index = integer, color = string hex code color value, e.g. 'FF0000'.}
+
+\item{\code{unorderedConfigSetDiscreteCondition(datatable_name, datatable_parameter,
+  sample_or_group, index, condition)}}{Set condition value for unordered discrete configuration editor. datatable_parameter = 'size' or 'shape' or 'color'. sample_or_group = 'sample' or 'group', index = integer, condition = integer.}
+
+\item{\code{unorderedConfigSetDiscreteShape(datatable_name, sample_or_group, index, shape)}}{Set shape value for unordered discrete configuration editor. sample_or_group = 'sample' or 'group', index = integer, shape = integer.}
+
+\item{\code{unorderedConfigSetDiscreteSize(datatable_name, sample_or_group, index, size)}}{Set size value for unordered discrete configuration editor. sample_or_group = 'sample' or 'group', index = integer, size = integer.}
+
+\item{\code{unorderedConfigSetDiscreteValue(datatable_name, datatable_parameter,
+  sample_or_group, index, value)}}{Set discrete value for unordered discrete configuration editor for a given
+type of parameter. datatable_parameter = 'shape' or
+'color' or 'size', sample_or_group = 'sample' or 'group', index = integer,
+value = double.}
+
+\item{\code{unorderedConfigSwitchGroupTab(datatable_name, datatable_parameter)}}{Switch to group tab for unordered discrete configuration editor. datatable_parameter = 'size' or 'shape' or 'color'.}
+
+\item{\code{unorderedConfigSwitchSampleTab(datatable_name, datatable_parameter)}}{Switch to sample tab for unordered discrete configuration editor. datatable_parameter = 'size' or 'shape' or 'color'.}
 }}
 

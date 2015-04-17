@@ -8,7 +8,7 @@ require(RCurl)
 #' the network maps.
 #' NaviCell can also act as a server allowing to be remotely controlled through
 #' a REST API. A python and a R language bindings have been developped on top of
-#' the REST API to hide technical details and to provide a user's friendly
+#' the REST API to hide technical details and to provide users and programmers a friendly
 #' interface. A Java binding has been initiated. 
 #' This is the R binding implementation.
 
