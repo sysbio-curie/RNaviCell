@@ -859,6 +859,147 @@ NaviCell$methods(
     }
 )
 
+#------------------------------------------------------------------------------
+#
+# Unordered Discrete Configuration Editor functions 
+#
+#------------------------------------------------------------------------------
+
+NaviCell$methods(
+    unorderedConfigOpen = function(datatable_name, datatable_parameter) {
+    "Open unordered discrete configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('open', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_unordered_discrete_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    unorderedConfigClose = function(datatable_name, datatable_parameter) {
+    "Open unordered discrete configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('close', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_unordered_discrete_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    unorderedConfigApply = function(datatable_name, datatable_parameter) {
+    "Apply changes to unordered discrete configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('apply', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_unordered_discrete_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    unorderedConfigApplyAndClose = function(datatable_name, datatable_parameter) {
+    "Apply changes to unordered discrete configuration editor for a given type of parameter, and close the window. datatable_parameter = 'shape' or 'color' or 'size'."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('apply_and_close', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_unordered_discrete_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    unorderedConfigSetAdvancedConfig = function(datatable_name, datatable_parameter, checked) {
+    "Open/close advanced configuration for unordered discrete configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_advanced_configuration', datatable_name, datatable_parameter, checked)), msg_id = .self$msg_id, action = 'nv_display_unordered_discrete_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    unorderedConfigSetDiscreteValue= function(datatable_name, datatable_parameter, sample_or_group, index, value) {
+    "Set discrete value for unordered discrete configuration editor for a given
+    type of parameter. datatable_parameter = 'shape' or
+    'color' or 'size', sample_or_group = 'sample' or 'group', index = integer,
+    value = double."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_discrete_value', datatable_name, datatable_parameter, sample_or_group, index, value)), msg_id = .self$msg_id, action = 'nv_display_unordered_discrete_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    unorderedConfigSetDiscreteColor= function(datatable_name, sample_or_group, index, color) {
+    "Set color value for unordered discrete configuration editor. sample_or_group = 'sample' or 'group', index = integer, color = string hex code color value, e.g. 'FF0000'."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_discrete_color', datatable_name, "color", sample_or_group, index, color)), msg_id = .self$msg_id, action = 'nv_display_unordered_discrete_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    unorderedConfigSetDiscreteSize= function(datatable_name, sample_or_group, index, size) {
+    "Set size value for unordered discrete configuration editor. sample_or_group = 'sample' or 'group', index = integer, size = integer."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_discrete_size', datatable_name, "size", sample_or_group, index, size)), msg_id = .self$msg_id, action = 'nv_display_unordered_discrete_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    unorderedConfigSetDiscreteShape = function(datatable_name, sample_or_group, index, shape) {
+    "Set shape value for unordered discrete configuration editor. sample_or_group = 'sample' or 'group', index = integer, shape = integer."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_discrete_shape', datatable_name, "shape", sample_or_group, index, shape)), msg_id = .self$msg_id, action = 'nv_display_unordered_discrete_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    unorderedConfigSetDiscreteCondition = function(datatable_name, datatable_parameter, sample_or_group, index, condition) {
+    "Set condition value for unordered discrete configuration editor. datatable_parameter = 'size' or 'shape' or 'color'. sample_or_group = 'sample' or 'group', index = integer, condition = integer."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('set_discrete_cond', datatable_name, datatable_parameter, sample_or_group, index, condition)), msg_id = .self$msg_id, action = 'nv_display_unordered_discrete_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    unorderedConfigSwitchSampleTab = function(datatable_name, datatable_parameter) {
+    "Switch to sample tab for unordered discrete configuration editor. datatable_parameter = 'size' or 'shape' or 'color'."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('switch_sample_tab', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_unordered_discrete_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
+NaviCell$methods(
+    unorderedConfigSwitchGroupTab = function(datatable_name, datatable_parameter) {
+    "Switch to group tab for unordered discrete configuration editor. datatable_parameter = 'size' or 'shape' or 'color'."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c('switch_group_tab', datatable_name, datatable_parameter)), msg_id = .self$msg_id, action = 'nv_display_unordered_discrete_config_perform')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        print(.self$formatResponse(response))
+    }
+)
+
 
 #------------------------------------------------------------------------------
 #
