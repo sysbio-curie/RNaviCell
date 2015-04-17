@@ -154,8 +154,15 @@ NaviCell$methods(
     }
 )
 
+#------------------------------------------------------------------------------
+#
+#  Get info from NaviCell server functions 
+#
+#------------------------------------------------------------------------------
+
+
 NaviCell$methods(
-    getHugoList = function(module_name, zoom_level) {
+    getHugoList = function(...) {
     "Get the list of the HUGO gene symbols for the current map (the list is stored in the object field hugo_list."
         .self$incMessageId()
         list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_get_hugo_list')
@@ -170,7 +177,7 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    getBiotypeList = function(object, mod, zoom_level) {
+    getBiotypeList = function(...) {
     "Return the list of biotypes understood by NaviCell Web Service."
         .self$incMessageId()
         list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_get_biotype_list')
@@ -183,7 +190,7 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    getModuleList = function(object, mod, zoom_level) {
+    getModuleList = function(...) {
     "Return the module list of the current NaviCell map."
         .self$incMessageId()
         list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_get_module_list')
@@ -195,6 +202,51 @@ NaviCell$methods(
     }
 )
 
+NaviCell$methods(
+    getImportedDatatables = function(...) {
+    "Return the list of datatables imported in the current NaviCell session."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_get_datatable_list')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        response <- fromJSON(response)
+        return(response$data)
+    }
+)
+
+NaviCell$methods(
+    getImportedSamples = function(...) {
+    "Return the list of samples from all the datatables imported in the current NaviCell session."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_get_datatable_sample_list')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        response <- fromJSON(response)
+        return(response$data)
+    }
+)
+
+NaviCell$methods(
+    getImportedGenes = function(...) {
+    "Return the list of genes from all the datatables imported in the current NaviCell session."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_get_datatable_gene_list')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        response <- fromJSON(response)
+        return(response$data)
+    }
+)
+
+
+#------------------------------------------------------------------------------
+#
+#  Datatable import functions 
+#
+#------------------------------------------------------------------------------
 
 NaviCell$methods(
     importDatatable = function(datatable_biotype, datatable_name, mat) {
