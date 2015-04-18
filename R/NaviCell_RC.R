@@ -36,7 +36,12 @@ NaviCell <- setRefClass(
     )
 )
 
-# methods
+
+#------------------------------------------------------------------------------
+#
+#  Session and utility functions 
+#
+#------------------------------------------------------------------------------
 
 NaviCell$methods(
     incMessageId = function(...) {
