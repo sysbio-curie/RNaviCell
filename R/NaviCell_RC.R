@@ -159,6 +159,18 @@ NaviCell$methods(
     }
 )
 
+NaviCell$methods(
+    file2dataString = function(list_param) {
+        data_string <- paste(readLines(fileName, warn=F),collapse='\n')
+        if (substr(data_string, nchar(data_string), nchar(data_string)) != "\n") {
+            data_string <- paste(data_string, '\n', sep="")
+        }
+        data_string <- paste("@DATA\n", data_string, sep="")
+        return(data_string)
+    }
+)
+ 
+
 #------------------------------------------------------------------------------
 #
 #  Get info from NaviCell server functions 
