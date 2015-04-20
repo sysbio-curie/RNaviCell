@@ -64,19 +64,6 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    setZoom = function(module, zoom_level) {
-    "Set a given zoom level on associated NaviCell map in browser."
-        list_param <- list(module=module, args = array(zoom_level), msg_id = .self$msg_id, action = 'nv_set_zoom')
-        .self$incMessageId()
-        str_data <- .self$makeData(.self$formatJson(list_param))
-        #print(str_data)
-        response <- postForm(.self$proxy_url, style='POST', id = .self$session_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
-        response <- .self$formatResponse(response)
-        message(response)
-    }
-)
-
-NaviCell$methods(
     launchBrowser = function(...) {
     "Launch client browser and points to the default NaviCell map."
         .self$incMessageId()
@@ -173,7 +160,118 @@ NaviCell$methods(
         return(data_string)
     }
 )
- 
+
+
+#------------------------------------------------------------------------------
+#
+#  Navigation and Zooming functions 
+#
+#------------------------------------------------------------------------------
+
+NaviCell$methods(
+    setZoom = function(module, zoom_level) {
+    "Set a given zoom level on associated NaviCell map in browser."
+        list_param <- list(module=module, args = array(zoom_level), msg_id = .self$msg_id, action = 'nv_set_zoom')
+        .self$incMessageId()
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        #print(str_data)
+        response <- postForm(.self$proxy_url, style='POST', id = .self$session_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        #message(response)
+    }
+)
+
+NaviCell$methods(
+    setMapCenter = function(location) {
+    "Set the relative position of the map center. location = 'MAP_CENTER' or 'MAP_EAST' or 'MAP_SOUTH' or MAP_NORTH' or 'MAP_SOUTH_WEST' or 'MAP_SOUTH_EAST' or 'MAP_NORTH_EAST'."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(location), msg_id = .self$msg_id, action = 'nv_set_center')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        #print(response)
+    }
+)
+
+NaviCell$methods(
+    setMapCenterAbsolute = function(pos_x, pos_y) {
+    "Set the absolute position of the map center. x = x coordinate (integer), y = y coordinate (integer)." 
+        .self$incMessageId()
+        list_param <- list(module='', args = list('ABSOLUTE', pos_x, pos_y), msg_id = .self$msg_id, action = 'nv_set_center')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        #print(response)
+    }
+)
+
+NaviCell$methods(
+    moveMapCenter = function(x, y) {
+    "Move the map center (relative). x = x coordinate (integer), y = y coordinate (integer)." 
+        .self$incMessageId()
+        list_param <- list(module='', args = list('RELATIVE', x, y), msg_id = .self$msg_id, action = 'nv_set_center')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        #print(response)
+    }
+)
+
+
+#------------------------------------------------------------------------------
+#
+# Entity selection functions 
+#
+#------------------------------------------------------------------------------
+
+NaviCell$methods(
+    selectEntity = function(entity) {
+    "Select an entity on the map. entity = entity's name (string)" 
+        .self$incMessageId()
+        list_param <- list(module='', args = array(entity), msg_id = .self$msg_id, action = 'nv_find_entities')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        #print(response)
+    }
+)
+
+NaviCell$methods(
+    findEntities = function(entity, bubble) {
+    "Find one or more entities on the map. entity = entity's name pattern (string), bubble = TRUE or FALSE." 
+        .self$incMessageId()
+        list_param <- list(module='', args = array(c(entity, bubble)), msg_id = .self$msg_id, action = 'nv_find_entities')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        #print(response)
+    }
+)
+
+NaviCell$methods(
+    uncheckAllEntities = function(...) {
+    "Uncheck all entities on the map."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_uncheck_all_entities')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        #print(response)
+    }
+)
+
+NaviCell$methods(
+    unhighlightAllEntities = function(...) {
+    "Uncheck all entities on the map."
+        .self$incMessageId()
+        list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_unhighlight_all_entities')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        #print(response)
+    }
+)
+
 
 #------------------------------------------------------------------------------
 #
