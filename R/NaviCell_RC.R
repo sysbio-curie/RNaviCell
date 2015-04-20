@@ -160,12 +160,16 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    file2dataString = function(list_param) {
+    file2dataString = function(fileName) {
+    "Load the content of a text file as tab-delimited string. Convert to NaviCell compatible format."
+        data_string <- NULL
         data_string <- paste(readLines(fileName, warn=F),collapse='\n')
-        if (substr(data_string, nchar(data_string), nchar(data_string)) != "\n") {
-            data_string <- paste(data_string, '\n', sep="")
+        if (!is.null(data_string)) {
+            if (substr(data_string, nchar(data_string), nchar(data_string)) != "\n") {
+                data_string <- paste(data_string, '\n', sep="")
+            }
+            data_string <- paste("@DATA\n", data_string, sep="")
         }
-        data_string <- paste("@DATA\n", data_string, sep="")
         return(data_string)
     }
 )
@@ -258,7 +262,6 @@ NaviCell$methods(
     }
 )
 
-
 #------------------------------------------------------------------------------
 #
 #  Datatable import functions 
@@ -282,27 +285,39 @@ NaviCell$methods(
             return()
         }
 
-        # select rows on hugo_list
-        # watch out: if matrix has 1 col, return type is vector, not matrix, so cast the return to matrix.
-        # watch out: when matrix as only one col. colname is lost with subselect, so set it back
-        mat_select <- as.matrix(mat[idx,])
-        if (ncol(mat) == 1) {
-            colnames(mat_select) <- colnames(mat)
+        data_string <- NULL
+        # case 1: simple gene list
+        if (dim(mat)[2] == 0) {
+            # convert to list
+            gene_list <- rownames(mat)
+            sel <- gene_list[idx]
+            data_string <- .self$geneList2string(sel) 
         }
-        
-        data_string <- n$matrix2string(mat_select)
-        #print(data_string)
 
-        .self$incMessageId()
-        list_param <- list(module='', args = list(datatable_biotype, datatable_name, "", data_string, emptyNamedList), msg_id = .self$msg_id, action = 'nv_import_datatables')
-        str_data <- .self$makeData(.self$formatJson(list_param))
+        # case 2: one or more columns in the matrix
+        if (dim(mat)[2] > 0) {
+            # select rows on hugo_list
+            # watch out: if matrix has 1 col, return type is vector, not matrix, so cast the return to matrix.
+            # watch out: when matrix as only one col. colname is lost with subselect, so set it back
+            mat_select <- as.matrix(mat[idx,])
+            if (ncol(mat) == 1) {
+                colnames(mat_select) <- colnames(mat)
+            }
+            data_string <- .self$matrix2string(mat_select)
+        }
 
-        .self$incMessageId()
-        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
-        #print(.self$formatResponse(response))
+        if (!is.null(data_string)) {
+            #print(data_string)
+            .self$incMessageId()
+            list_param <- list(module='', args = list(datatable_biotype, datatable_name, "", data_string, emptyNamedList), msg_id = .self$msg_id, action = 'nv_import_datatables')
+            str_data <- .self$makeData(.self$formatJson(list_param))
+
+            .self$incMessageId()
+            response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+            #print(.self$formatResponse(response))
+        }
     }
 )
-
 
 NaviCell$methods(
     readDatatable = function(fileName) {
@@ -343,6 +358,17 @@ NaviCell$methods(
     }
 )
 
+NaviCell$methods(
+    geneList2string = function(gene_list) {
+    "Convert a gene list R object to a formatted string (internal utility)."
+        string <- paste('@DATA\ngenes\n')
+        gene_string <- paste(gene_list, sep="", collapse="\n")
+        string <- paste(string, gene_string, sep="")
+        string <- paste(string, "\n", sep="")
+        return(string)
+    }
+)
+ 
 
 #------------------------------------------------------------------------------
 #
@@ -1362,18 +1388,20 @@ NaviCell$methods(
 
 NaviCell$methods(
     importSampleAnnotationFromFile = function(fileName) {
-        data_string <- paste(readLines(fileName, warn=F),collapse='\n')
-        if (substr(data_string, nchar(data_string), nchar(data_string)) != "\n") {
-            data_string <- paste(data_string, '\n', sep="")
+        #data_string <- paste(readLines(fileName, warn=F),collapse='\n')
+        #if (substr(data_string, nchar(data_string), nchar(data_string)) != "\n") {
+        #    data_string <- paste(data_string, '\n', sep="")
+        #}
+        #data_string <- paste("@DATA\n", data_string, sep="")
+        data_string <- .self$file2dataString(fileName)
+        if ( ! is.null(data_string)) {
+            .self$incMessageId()
+            list_param <- list(module='', args = list("import", data_string), msg_id = .self$msg_id, action = 'nv_sample_annotation_perform')
+            str_data <- .self$makeData(.self$formatJson(list_param))
+            .self$incMessageId()
+            response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+            #print(.self$formatResponse(response))
         }
-        data_string <- paste("@DATA\n", data_string, sep="")
-        .self$incMessageId()
-        list_param <- list(module='', args = list("import", data_string), msg_id = .self$msg_id, action = 'nv_sample_annotation_perform')
-        str_data <- .self$makeData(.self$formatJson(list_param))
-
-        .self$incMessageId()
-        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
-        #print(.self$formatResponse(response))
     }
 )
 

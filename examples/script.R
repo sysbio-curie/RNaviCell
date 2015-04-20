@@ -9,7 +9,7 @@ n$launchBrowser()
 Sys.sleep(2)
 
 # read in prostate expression data as R matrix 
-mat <- as.matrix(read.table('DU145_data.txt', header=T, row.names=1))
+mat <- n$readDatatable('DU145_data.txt')
 
 # import data into active NaviCell session
 n$importDatatable("mRNA expression data", "DU145", mat)
