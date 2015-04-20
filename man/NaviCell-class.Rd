@@ -11,7 +11,7 @@ biological molecular networks using Google Maps and for visualizing 'omics' data
 the network maps.
 NaviCell can also act as a server allowing to be remotely controlled through
 a REST API. A python and a R language bindings have been developped on top of
-the REST API to hide technical details and to provide a user's friendly
+the REST API to hide technical details and to provide users and programmers a friendly
 interface. A Java binding has been initiated.
 This is the R binding implementation.
 }
@@ -101,17 +101,27 @@ This is the R binding implementation.
 
 \item{\code{drawingConfigSelectMapStaining(checked)}}{Select map staining display in drawing configuration dialog. checked = TRUE or FALSE.}
 
+\item{\code{file2dataString(fileName)}}{Load the content of a text file as tab-delimited string. Convert to NaviCell compatible format.}
+
 \item{\code{formatJson(list_param)}}{Format list of parameters to NaviCell server compatible JSON format (internal utility).}
 
 \item{\code{formatResponse(response)}}{Format response obtained from the RCurl 'postForm' command (internal utility).}
 
+\item{\code{geneList2string(gene_list)}}{Convert a gene list R object to a formatted string (internal utility).}
+
 \item{\code{generateSessionId(...)}}{Generate a session ID.}
 
-\item{\code{getBiotypeList(object, mod, zoom_level)}}{Return the list of biotypes understood by NaviCell Web Service.}
+\item{\code{getBiotypeList(...)}}{Return the list of biotypes understood by NaviCell Web Service.}
 
-\item{\code{getHugoList(module_name, zoom_level)}}{Get the list of the HUGO gene symbols for the current map (the list is stored in the object field hugo_list.}
+\item{\code{getHugoList(...)}}{Get the list of the HUGO gene symbols for the current map (the list is stored in the object field hugo_list.}
 
-\item{\code{getModuleList(object, mod, zoom_level)}}{Return the module list of the current NaviCell map.}
+\item{\code{getImportedDatatables(...)}}{Return the list of datatables imported in the current NaviCell session.}
+
+\item{\code{getImportedGenes(...)}}{Return the list of genes from all the datatables imported in the current NaviCell session.}
+
+\item{\code{getImportedSamples(...)}}{Return the list of samples from all the datatables imported in the current NaviCell session.}
+
+\item{\code{getModuleList(...)}}{Return the module list of the current NaviCell map.}
 
 \item{\code{glyphEditorApply(glyph_num)}}{Apply changes in the glyph editor.}
 
@@ -214,6 +224,8 @@ This is the R binding implementation.
 \item{\code{unorderedConfigApply(datatable_name, datatable_parameter)}}{Apply changes to unordered discrete configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'.}
 
 \item{\code{unorderedConfigApplyAndClose(datatable_name, datatable_parameter)}}{Apply changes to unordered discrete configuration editor for a given type of parameter, and close the window. datatable_parameter = 'shape' or 'color' or 'size'.}
+
+\item{\code{unorderedConfigCancel(datatable_name, datatable_parameter)}}{Cancel changes for unordered discrete configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'.}
 
 \item{\code{unorderedConfigClose(datatable_name, datatable_parameter)}}{Open unordered discrete configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'.}
 
