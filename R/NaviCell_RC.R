@@ -3,14 +3,39 @@ require(RCurl)
 
 #' NaviCell reference class
 #'
-#' NaviCell (https://navicell.curie.fr) is a web-based environment for browsing, commenting and analyzing very large
-#' biological molecular networks using Google Maps and for visualizing 'omics' data on top of
-#' the network maps.
+#' NaviCell (https://navicell.curie.fr) is a web-based environment for
+#' browsing, commenting and analyzing very large biological molecular networks
+#' using Google Maps and for visualizing 'omics' data on top of the network
+#' maps.
+#'
 #' NaviCell can also act as a server allowing to be remotely controlled through
-#' a REST API. A python and a R language bindings have been developped on top of
-#' the REST API to hide technical details and to provide users and programmers a friendly
-#' interface. A Java binding has been initiated. 
-#' This is the R binding implementation.
+#' a REST API. A python and a R language bindings have been developped on top
+#' of the REST API to hide technical details and to provide users and
+#' programmers a friendly interface. A Java binding has been initiated. 
+#' 
+#' This is the R binding implementation. For more information about the
+#' NaviCell Web Service and a tutorial on how to use it, see
+#' https://navicell.curie.fr/pages/nav_web_service.html and
+#' https://github.com/eb00/RNaviCell.
+
+
+#    Copyright (C) {2015} {Institut Curie, 26 rue d'Ulm, 75005 Paris}
+#
+#    This library is free software; you can redistribute it and/or
+#    modify it under the terms of the GNU Lesser General Public
+#    License as published by the Free Software Foundation; either
+#    version 2.1 of the License, or (at your option) any later version.
+#
+#    This library is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+#    Lesser General Public License for more details.
+#
+#    You should have received a copy of the GNU Lesser General Public
+#    License along with this library; if not, write to the Free Software
+#    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+#    USA
+
 
 NaviCell <- setRefClass(
     # class name
