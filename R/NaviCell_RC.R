@@ -64,6 +64,34 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
+    serverIsReady =  function(...) {
+    "Test if NaviCell server is ready (internal utility)."    
+        .self$incMessageId()
+        list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_is_ready')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        .self$incMessageId()
+        response <- postForm(.self$proxy_url, style='POST', id = .self$session_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        return(fromJSON(response)$data)
+    }
+)
+
+NaviCell$methods(
+    waitForReady =  function(...) {
+    "Wait until NaviCell server is ready (internal utility)."  
+        for (i in 1:50) {
+            if (.self$serverIsReady() == TRUE) {
+                break
+            }
+            else {
+                print("wait for NaviCell server to be ready..")
+                Sys.sleep(1)
+            }
+        }
+    }
+)
+
+NaviCell$methods(
     launchBrowser = function(...) {
     "Launch client browser and points to the default NaviCell map."
         .self$incMessageId()
@@ -72,6 +100,7 @@ NaviCell$methods(
         }
         url <- paste(.self$map_url, '?id=', .self$session_id, sep = '')
         browseURL(url)
+        .self$waitForReady()
     }
 )
 
@@ -140,6 +169,7 @@ NaviCell$methods(
     formatJson = function(list_param) {
     "Format list of parameters to NaviCell server compatible JSON format (internal utility)."
         data <- toJSON(list_param)
+        # remove unnecessary characters 
         data <- gsub("\n", '', data)
         data <- gsub(" ", "", data)
         return(data)
@@ -169,15 +199,15 @@ NaviCell$methods(
 #------------------------------------------------------------------------------
 
 NaviCell$methods(
-    setZoom = function(module, zoom_level) {
-    "Set a given zoom level on associated NaviCell map in browser."
-        list_param <- list(module=module, args = array(zoom_level), msg_id = .self$msg_id, action = 'nv_set_zoom')
+    setZoom = function(zoom_level) {
+    "Set a given zoom level on associated NaviCell map in browser. zoom_level = integer value."
         .self$incMessageId()
+        list_param <- list(module='', args = array(zoom_level), msg_id = .self$msg_id, action = 'nv_set_zoom')
         str_data <- .self$makeData(.self$formatJson(list_param))
-        #print(str_data)
+        .self$incMessageId()
         response <- postForm(.self$proxy_url, style='POST', id = .self$session_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
         response <- .self$formatResponse(response)
-        #message(response)
+        #print(response)
     }
 )
 
