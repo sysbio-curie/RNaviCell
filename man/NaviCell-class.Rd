@@ -103,6 +103,8 @@ This is the R binding implementation.
 
 \item{\code{file2dataString(fileName)}}{Load the content of a text file as tab-delimited string. Convert to NaviCell compatible format.}
 
+\item{\code{findEntities(entity, bubble)}}{Find one or more entities on the map. entity = entity's name pattern (string), bubble = TRUE or FALSE.}
+
 \item{\code{formatJson(list_param)}}{Format list of parameters to NaviCell server compatible JSON format (internal utility).}
 
 \item{\code{formatResponse(response)}}{Format response obtained from the RCurl 'postForm' command (internal utility).}
@@ -193,6 +195,8 @@ This is the R binding implementation.
 
 \item{\code{matrix2string(mat)}}{Convert an R matrix object to a formatted string (internal utility).}
 
+\item{\code{moveMapCenter(x, y)}}{Move the map center (relative). x = x coordinate (integer), y = y coordinate (integer).}
+
 \item{\code{mydataDialogClose(...)}}{Close MyData Dialog.}
 
 \item{\code{mydataDialogOpen(...)}}{Open MyData Dialog.}
@@ -219,7 +223,19 @@ This is the R binding implementation.
 
 \item{\code{sampleAnnotationSelectAnnotation(annotation_name, true_or_false)}}{Select or un-select an annotation for creating groups from a sample annotation table. true_or_false = TRUE, select, true_or_false = FALSE, un-select.}
 
-\item{\code{setZoom(module, zoom_level)}}{Set a given zoom level on associated NaviCell map in browser.}
+\item{\code{selectEntity(entity)}}{Select an entity on the map. entity = entity's name (string)}
+
+\item{\code{serverIsReady(...)}}{Test if NaviCell server is ready (internal utility).}
+
+\item{\code{setMapCenter(location)}}{Set the relative position of the map center. location = 'MAP_CENTER' or 'MAP_EAST' or 'MAP_SOUTH' or MAP_NORTH' or 'MAP_SOUTH_WEST' or 'MAP_SOUTH_EAST' or 'MAP_NORTH_EAST'.}
+
+\item{\code{setMapCenterAbsolute(pos_x, pos_y)}}{Set the absolute position of the map center. x = x coordinate (integer), y = y coordinate (integer).}
+
+\item{\code{setZoom(zoom_level)}}{Set a given zoom level on associated NaviCell map in browser. zoom_level = integer value.}
+
+\item{\code{uncheckAllEntities(...)}}{Uncheck all entities on the map.}
+
+\item{\code{unhighlightAllEntities(...)}}{Uncheck all entities on the map.}
 
 \item{\code{unorderedConfigApply(datatable_name, datatable_parameter)}}{Apply changes to unordered discrete configuration editor for a given type of parameter. datatable_parameter = 'shape' or 'color' or 'size'.}
 
@@ -251,5 +267,7 @@ value = double.}
 \item{\code{unorderedConfigSwitchGroupTab(datatable_name, datatable_parameter)}}{Switch to group tab for unordered discrete configuration editor. datatable_parameter = 'size' or 'shape' or 'color'.}
 
 \item{\code{unorderedConfigSwitchSampleTab(datatable_name, datatable_parameter)}}{Switch to sample tab for unordered discrete configuration editor. datatable_parameter = 'size' or 'shape' or 'color'.}
+
+\item{\code{waitForReady(...)}}{Wait until NaviCell server is ready (internal utility).}
 }}
 
