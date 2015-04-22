@@ -1,5 +1,5 @@
-# load the code
-source('../R/NaviCell_RC.R')
+# load the library 
+library(RNaviCell)
 
 # create NaviCell object
 n <- NaviCell()
