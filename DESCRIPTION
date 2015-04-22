@@ -1,9 +1,9 @@
 Package: RNaviCell
-Title: RNaviCell, a R package for NaviCell Web service
+Title: RNaviCell
 Version: 0.1
 Author: Eric Bonnet
 Maintainer: Eric Bonnet <eric.bonnet@curie.fr>
 Description: RNaviCell is the R implementation to access the NaviCell Web Service. For more information and a tutorial on how to use it, see https://navicell.curie.fr/pages/nav_web_service.html and https://github.com/eb00/RNaviCell. 
-Depends: R (>= 2.14.0)
+Depends: R (>= 2.14.0), RCurl, RJSONIO
 Suggests: methods
 License: LGPL-2.1 | file LICENSE

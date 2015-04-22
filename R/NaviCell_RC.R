@@ -1,24 +1,5 @@
-require(RJSONIO)
-require(RCurl)
-
-#' NaviCell reference class
-#'
-#' NaviCell (https://navicell.curie.fr) is a web-based environment for
-#' browsing, commenting and analyzing very large biological molecular networks
-#' using Google Maps and for visualizing 'omics' data on top of the network
-#' maps.
-#'
-#' NaviCell can also act as a server allowing to be remotely controlled through
-#' a REST API. A python and a R language bindings have been developped on top
-#' of the REST API to hide technical details and to provide users and
-#' programmers a friendly interface. A Java binding has been initiated. 
-#' 
-#' This is the R binding implementation. For more information about the
-#' NaviCell Web Service and a tutorial on how to use it, see
-#' https://navicell.curie.fr/pages/nav_web_service.html and
-#' https://github.com/eb00/RNaviCell.
-
-
+#    RNaviCell package
+#
 #    Copyright (C) {2015} {Institut Curie, 26 rue d'Ulm, 75005 Paris}
 #
 #    This library is free software; you can redistribute it and/or
@@ -36,7 +17,24 @@ require(RCurl)
 #    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 #    USA
 
-
+#' NaviCell reference class
+#'
+#' NaviCell (https://navicell.curie.fr) is a web-based environment for
+#' browsing, commenting and analyzing very large biological molecular networks
+#' using Google Maps and for visualizing 'omics' data on top of the network
+#' maps.
+#'
+#' NaviCell can also act as a server allowing to be remotely controlled through
+#' a REST API. A python and a R language bindings have been developped on top
+#' of the REST API to hide technical details and to provide users and
+#' programmers a friendly interface. A Java binding has been initiated. 
+#' 
+#' This is the R binding implementation. For more information about the
+#' NaviCell Web Service and a tutorial on how to use it, see
+#' https://navicell.curie.fr/pages/nav_web_service.html and
+#' https://github.com/eb00/RNaviCell.
+#'
+#' @export NaviCell
 NaviCell <- setRefClass(
     # class name
     "NaviCell",

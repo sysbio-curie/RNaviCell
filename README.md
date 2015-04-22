@@ -2,7 +2,7 @@
 
 [NaviCell](https://navicell.curie.fr) is a web tool for exploring large biological molecular interactions maps.
 
-[NaviCell Web Service](https://navicell.curie.fr/pqges/nav_web_service.html) for
+[NaviCell Web Service](https://navicell.curie.fr/pages/nav_web_service.html) for
 Network-based Data Visualization allows mapping high-throughput data (mRNA,
 microRNA and protein expressions, gene copy number and mutation profiles,
 simple gene lists and clinical data) onto NaviCell network maps. We have
