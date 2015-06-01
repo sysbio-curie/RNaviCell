@@ -6,7 +6,6 @@ n <- NaviCell()
 
 # create active NaviCell session with the server
 n$launchBrowser()
-Sys.sleep(2)
 
 # read in prostate expression data as R matrix 
 mat <- n$readDatatable('DU145_data.txt')
