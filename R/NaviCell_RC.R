@@ -425,12 +425,12 @@ NaviCell$methods(
 
         # check if the field hugo_list is set
         if (length(.self$hugo_list) == 0) {
-            hl <- n$getHugoList()
+            hl <- .self$getHugoList()
         }
 
         # filter matrix on hugo_list
         # abort if there is no overlap
-        rownames(mat) %in% n$hugo_list -> idx 
+        rownames(mat) %in% .self$hugo_list -> idx 
         if (sum(idx) < 1) {
             warning("Error: no overlap between map and matrix HUGO gene symbols.")
             return()
