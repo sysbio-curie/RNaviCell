@@ -13,8 +13,6 @@ mat <- n$readDatatable('DU145_data.txt')
 # import data into active NaviCell session
 n$importDatatable("mRNA expression data", "DU145", mat)
 
-Sys.sleep(1)
-
 # configure color and treshold parameters 
 n$continuousConfigSwitchSampleTab("DU145", "color")
 n$continuousConfigSetStepCount("sample", 'color', 'DU145', 2)
