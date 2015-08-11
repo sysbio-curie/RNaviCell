@@ -95,6 +95,7 @@ NaviCell$methods(
         .self$incMessageId()
         response <- postForm(.self$proxy_url, style='POST', id = .self$session_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
         response <- .self$formatResponse(response)
+        #print(response)
         return(fromJSON(response)$data)
     }
 )
@@ -113,6 +114,36 @@ NaviCell$methods(
         }
     }
 )
+
+NaviCell$methods(
+    isImported =  function(...) {
+    "Test if data table is imported (internal utility)."    
+        .self$incMessageId()
+        list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_is_imported')
+        str_data <- .self$makeData(.self$formatJson(list_param))
+        .self$incMessageId()
+        response <- postForm(.self$proxy_url, style='POST', id = .self$session_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
+        response <- .self$formatResponse(response)
+        #print(response)
+        return(fromJSON(response)$data)
+    }
+)
+
+NaviCell$methods(
+    waitForImported =  function(...) {
+    "Wait until data is imported (internal utility)."  
+        for (i in 1:50) {
+            if (.self$isImported() == TRUE) {
+                break
+            }
+            else {
+                print("waiting for data to be imported...")
+                Sys.sleep(0.5)
+            }
+        }
+    }
+)
+
 
 NaviCell$methods(
     launchBrowser = function(...) {
@@ -465,6 +496,7 @@ NaviCell$methods(
 
             .self$incMessageId()
             response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+            .self$waitForImported()
             #print(.self$formatResponse(response))
         }
     }
