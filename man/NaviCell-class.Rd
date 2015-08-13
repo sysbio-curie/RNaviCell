@@ -234,6 +234,8 @@ https://github.com/eb00/RNaviCell.
 
 \item{\code{selectEntity(entity)}}{Select an entity on the map. entity = entity's name (string)}
 
+\item{\code{sendBigData(fill_cmd)}}{slice data in packets big data string and send it to server (internal utility)}
+
 \item{\code{serverIsReady(...)}}{Test if NaviCell server is ready (internal utility).}
 
 \item{\code{setMapCenter(location)}}{Set the relative position of the map center. location = 'MAP_CENTER' or 'MAP_EAST' or 'MAP_SOUTH' or MAP_NORTH' or 'MAP_SOUTH_WEST' or 'MAP_SOUTH_EAST' or 'MAP_NORTH_EAST'.}

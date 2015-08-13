@@ -45,7 +45,8 @@ NaviCell <- setRefClass(
         map_url = "character",
         msg_id = "numeric",
         session_id = "character",
-        hugo_list = "vector"
+        hugo_list = "vector",
+        packsize = "numeric"
     ),
 
     # Set default values
@@ -55,6 +56,7 @@ NaviCell <- setRefClass(
             map_url <<- "https://navicell.curie.fr/navicell/maps/cellcycle/master/index.php"
             msg_id <<- 1000
             session_id <<- ""
+            packsize <<- 500000
         }
     )
 )
@@ -108,7 +110,7 @@ NaviCell$methods(
                 break
             }
             else {
-                print("wait for NaviCell server to be ready..")
+                message("wait for NaviCell server to be ready..")
                 Sys.sleep(1)
             }
         }
@@ -134,10 +136,11 @@ NaviCell$methods(
     "Wait until data is imported (internal utility)."  
         for (i in 1:50) {
             if (.self$isImported() == TRUE) {
+                message("data imported.")
                 break
             }
             else {
-                print("waiting for data to be imported...")
+                message("waiting for data to be imported...")
                 Sys.sleep(0.5)
             }
         }
@@ -489,18 +492,61 @@ NaviCell$methods(
         }
 
         if (!is.null(data_string)) {
-            #print(data_string)
-            .self$incMessageId()
-            list_param <- list(module='', args = list(datatable_biotype, datatable_name, "", data_string, emptyNamedList), msg_id = .self$msg_id, action = 'nv_import_datatables')
-            str_data <- .self$makeData(.self$formatJson(list_param))
+            if (nchar(data_string) < .self$packsize) {
+                #print(data_string)
+                .self$incMessageId()
+                list_param <- list(module='', args = list(datatable_biotype, datatable_name, "", data_string, emptyNamedList), msg_id = .self$msg_id, action = 'nv_import_datatables')
+                str_data <- .self$makeData(.self$formatJson(list_param))
 
-            .self$incMessageId()
-            response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
-            .self$waitForImported()
-            #print(.self$formatResponse(response))
+                .self$incMessageId()
+                response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+                .self$waitForImported()
+                #print(.self$formatResponse(response))
+            }
+            else {
+                #print("size > packsize")
+                list_param <- list(module='', args = list(datatable_biotype, datatable_name, "", data_string, emptyNamedList), action = 'nv_import_datatables')
+                fill_cmd <- .self$makeData(.self$formatJson(list_param))
+                .self$sendBigData(fill_cmd)
+                .self$waitForImported()
+            }
         }
     }
 )
+
+
+NaviCell$methods(
+    sendBigData = function(fill_cmd) {
+        "slice data in packets big data string and send it to server (internal utility)"
+        cmd_len <- nchar(fill_cmd)
+        cmd_packcount <- as.integer(cmd_len / .self$packsize) + 1
+
+        # slice data in packets and send them to server
+        for (i in 0:(cmd_packcount-1)) {
+            cmd_packnum <- i+1
+            
+            stop <- (i+1) * .self$packsize
+            start <- 0
+            if (i > 0) {
+                start <- (i * packsize) + 1
+            }
+            if (stop > cmd_len) {
+                stop <- cmd_len - 1
+            }
+            start <- start + 1
+            stop <- stop + 1
+
+            response <- postForm(.self$proxy_url, style = 'POST', perform = "filling", data = substr(fill_cmd, start, stop), id = .self$session_id, packcount = cmd_packcount, packnum = cmd_packnum, mode='cli2srv', .opts=curlOptions(ssl.verifypeer=F)) 
+            #print(.self$formatResponse(response))
+        }
+
+        # end message to trigger data re-composition on server side
+        .self$incMessageId()
+        response <- postForm(.self$proxy_url, style = 'POST', data="@@", id = .self$session_id, perform = "send_and_rcv", packcount = cmd_packcount, msg_id = .self$msg_id, mode='cli2srv', .opts=curlOptions(ssl.verifypeer=F)) 
+
+    }
+)
+
 
 NaviCell$methods(
     readDatatable = function(fileName) {
@@ -1571,19 +1617,22 @@ NaviCell$methods(
 
 NaviCell$methods(
     importSampleAnnotationFromFile = function(fileName) {
-        #data_string <- paste(readLines(fileName, warn=F),collapse='\n')
-        #if (substr(data_string, nchar(data_string), nchar(data_string)) != "\n") {
-        #    data_string <- paste(data_string, '\n', sep="")
-        #}
-        #data_string <- paste("@DATA\n", data_string, sep="")
         data_string <- .self$file2dataString(fileName)
-        if ( ! is.null(data_string)) {
-            .self$incMessageId()
-            list_param <- list(module='', args = list("import", data_string), msg_id = .self$msg_id, action = 'nv_sample_annotation_perform')
-            str_data <- .self$makeData(.self$formatJson(list_param))
-            .self$incMessageId()
-            response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
-            #print(.self$formatResponse(response))
+        if (!is.null(data_string)) {
+            if (nchar(data_string) < .self$packsize) {
+                .self$incMessageId()
+                list_param <- list(module='', args = list("import", data_string), msg_id = .self$msg_id, action = 'nv_sample_annotation_perform')
+                str_data <- .self$makeData(.self$formatJson(list_param))
+                .self$incMessageId()
+                response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+                #print(.self$formatResponse(response))
+            }
+            else {
+                list_param <- list(module='', args = list("import", data_string), action = 'nv_sample_annotation_perform')
+                fill_cmd <- .self$makeData(.self$formatJson(list_param))
+                .self$sendBigData(fill_cmd)
+                .self$waitForImported()
+            }
         }
     }
 )
