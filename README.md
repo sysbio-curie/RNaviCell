@@ -1,3 +1,5 @@
+[![Travis-CI Build Status](https://travis-ci.org/sysbio-curie/RNaviCell.svg?branch=master)](https://travis-ci.org/sysbio-curie/RNaviCell)
+
 # RNaviCell
 
 [NaviCell](https://navicell.curie.fr) is a web tool for exploring large biological molecular interactions maps.
