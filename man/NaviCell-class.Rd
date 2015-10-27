@@ -283,4 +283,11 @@ value = double.}
 
 \item{\code{waitForReady(...)}}{Wait until NaviCell server is ready (internal utility).}
 }}
+\examples{
+\dontrun{
+	### Opens a communication with web service, build does not finish if example is tested
+	file<-system.file("extdata", "script.R", package = "RNaviCell")
+	source("file")
+	}
+}
 

@@ -1,14 +1,14 @@
-# load the library 
-library(RNaviCell)
-
 # create NaviCell object
 n <- NaviCell()
 
 # create active NaviCell session with the server
 n$launchBrowser()
 
+#get path of data
+file<-system.file("extdata", "DU145_data.txt", package = "RNaviCell")
+
 # read in prostate expression data as R matrix 
-mat <- n$readDatatable('DU145_data.txt')
+mat <- n$readDatatable(file)
 
 # import data into active NaviCell session
 n$importDatatable("mRNA expression data", "DU145", mat)

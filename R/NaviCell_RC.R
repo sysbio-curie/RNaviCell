@@ -34,7 +34,14 @@
 #' https://navicell.curie.fr/pages/nav_web_service.html and
 #' https://github.com/eb00/RNaviCell.
 #'
+#' @import RCurl
+#' @import RJSONIO
 #' @export NaviCell
+#' @examples \dontrun{
+#'	### Opens a communication with web service, build does not finish if example is tested
+#'	file<-system.file("extdata", "script.R", package = "RNaviCell")
+#'	source("file")
+#'	}
 NaviCell <- setRefClass(
     # class name
     "NaviCell",
