@@ -36,6 +36,7 @@
 #'
 #' @import RCurl
 #' @import RJSONIO
+#' @importFrom methods new
 #' @export NaviCell
 #' @examples \dontrun{
 #'	### Opens a communication with web service, build does not finish if example is tested

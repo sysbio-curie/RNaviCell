@@ -3,3 +3,4 @@
 export(NaviCell)
 import(RCurl)
 import(RJSONIO)
+importFrom(methods,new)
