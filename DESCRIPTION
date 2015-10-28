@@ -6,7 +6,7 @@ Authors@R: c(person("Eric", "Bonnet", role = c("aut", "cre"),
              person("Paul", "Deveau",role = "aut",
              email = "paul.deveau@curie.fr"))
 Maintainer: Eric Bonnet <eric.bonnet@curie.fr>
-Description: The RNaviCell package is the R implementation to access the corresponding data visualization web service. For more information and a tutorial on how to use it, see https://navicell.curie.fr/pages/nav_web_service.html and https://github.com/sysbio-curie/RNaviCell. 
+Description: This package is the R implementation to access the corresponding data visualization web service. For more information and a tutorial on how to use it, see https://navicell.curie.fr/pages/nav_web_service.html and https://github.com/sysbio-curie/RNaviCell. 
 Depends: R (>= 2.14.0), RCurl, RJSONIO
 Imports: methods
 License: LGPL-2.1 | file LICENSE
