@@ -1,6 +1,6 @@
 Package: RNaviCell
 Title: Visualization of High-Throughput Data on Large-Scale Biological Networks
-Version: 0.2
+Version: 0.2.1
 Authors@R: c(person("Eric", "Bonnet", role = c("aut", "cre"),
              email = "eric.bonnet@curie.fr"),
              person("Paul", "Deveau",role = "aut",
