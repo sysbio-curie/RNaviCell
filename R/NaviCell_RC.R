@@ -51,7 +51,7 @@ NaviCell <- setRefClass(
     fields = list( 
         proxy_url = "character",
         map_url = "character",
-        browser = "character",
+        browser_command = "character",
         msg_id = "numeric",
         session_id = "character",
         hugo_list = "vector",
@@ -70,9 +70,9 @@ NaviCell <- setRefClass(
 	  if (map_url == "") {
             map_url <<- "https://navicell.curie.fr/navicell/maps/cellcycle/master/index.php"
 	  }
-          browser <<- Sys.getenv("NV_BROWSER_COMMAND")
-          if (browser == "") {
-            browser <<- getOption('browser')
+          browser_command <<- Sys.getenv("NV_BROWSER_COMMAND")
+          if (browser_command == "") {
+            browser_command <<- getOption('browser')
           }
           msg_id <<- 1000
           session_id <<- ""
@@ -177,7 +177,7 @@ NaviCell$methods(
             .self$generateSessionId()
         }
         url <- paste(.self$map_url, '?demo=', .self$demo, '&id=', .self$session_id, '&proxy_url=', .self$proxy_url, sep = '')
-        browseURL(url, browser)
+        browseURL(url, .self$browser_command)
         .self$waitForReady()
     }
 )
