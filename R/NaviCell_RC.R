@@ -51,10 +51,12 @@ NaviCell <- setRefClass(
     fields = list( 
         proxy_url = "character",
         map_url = "character",
+        browser = "character",
         msg_id = "numeric",
         session_id = "character",
         hugo_list = "vector",
-        packsize = "numeric"
+        packsize = "numeric",
+        demo = "character"
     ),
 
     # Set default values
@@ -65,6 +67,8 @@ NaviCell <- setRefClass(
             msg_id <<- 1000
             session_id <<- ""
             packsize <<- 500000
+            demo <<- "off"
+            browser <<- getOption('browser')
         }
     )
 )
@@ -163,8 +167,8 @@ NaviCell$methods(
         if (.self$session_id == "") {
             .self$generateSessionId()
         }
-        url <- paste(.self$map_url, '?id=', .self$session_id, sep = '')
-        browseURL(url)
+        url <- paste(.self$map_url, '?demo=', .self$demo, '&id=', .self$session_id, '&proxy_url=', .self$proxy_url, sep = '')
+        browseURL(url, browser)
         .self$waitForReady()
     }
 )
