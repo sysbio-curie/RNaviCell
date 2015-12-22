@@ -62,13 +62,22 @@ NaviCell <- setRefClass(
     # Set default values
     methods = list(
         initialize = function(...) {
+          proxy_url <<- Sys.getenv("NV_PROXY_URL")
+	  if (proxy_url == "") {
             proxy_url <<- "https://navicell.curie.fr/cgi-bin/nv_proxy.php"
+          }
+          map_url <<- Sys.getenv("NV_MAP_URL")
+	  if (map_url == "") {
             map_url <<- "https://navicell.curie.fr/navicell/maps/cellcycle/master/index.php"
-            msg_id <<- 1000
-            session_id <<- ""
-            packsize <<- 500000
-            demo <<- "off"
+	  }
+          browser <<- Sys.getenv("NV_BROWSER_COMMAND")
+          if (browser == "") {
             browser <<- getOption('browser')
+          }
+          msg_id <<- 1000
+          session_id <<- ""
+          packsize <<- 500000
+          demo <<- "off"
         }
     )
 )
