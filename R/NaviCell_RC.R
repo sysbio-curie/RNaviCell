@@ -27,8 +27,8 @@
 #' NaviCell can also act as a server allowing to be remotely controlled through
 #' a REST API. A python and a R language bindings have been developped on top
 #' of the REST API to hide technical details and to provide users and
-#' programmers a friendly interface. A Java binding has been initiated. 
-#' 
+#' programmers a friendly interface. A Java binding has been initiated.
+#'
 #' This is the R binding implementation. For more information about the
 #' NaviCell Web Service and a tutorial on how to use it, see
 #' https://navicell.curie.fr/pages/nav_web_service.html and
@@ -47,8 +47,8 @@ NaviCell <- setRefClass(
     # class name
     "NaviCell",
 
-    # Define the fields 
-    fields = list( 
+    # Define the fields
+    fields = list(
         proxy_url = "character",
         map_url = "character",
         browser_command = "character",
@@ -71,9 +71,6 @@ NaviCell <- setRefClass(
             map_url <<- "https://navicell.curie.fr/navicell/maps/cellcycle/master/index.php"
 	  }
           browser_command <<- Sys.getenv("NV_BROWSER_COMMAND")
-          if (browser_command == "") {
-            browser_command <<- getOption('browser')
-          }
           msg_id <<- 1000
           session_id <<- ""
           packsize <<- 500000
@@ -85,20 +82,20 @@ NaviCell <- setRefClass(
 
 #------------------------------------------------------------------------------
 #
-#  Session and utility functions 
+#  Session and utility functions
 #
 #------------------------------------------------------------------------------
 
 NaviCell$methods(
     incMessageId = function(...) {
-    "Increase message ID counter." 
+    "Increase message ID counter."
         msg_id <<- msg_id + 1
     }
 )
 
 NaviCell$methods(
     generateSessionId =  function(...) {
-    "Generate a session ID."    
+    "Generate a session ID."
         .self$incMessageId()
         response = postForm(.self$proxy_url, style = 'POST', id = "1", perform = "genid", msg_id = .self$msg_id, mode = "session", .opts=curlOptions(ssl.verifypeer=F))
         response <- .self$formatResponse(response)
@@ -111,7 +108,7 @@ NaviCell$methods(
 
 NaviCell$methods(
     serverIsReady =  function(...) {
-    "Test if NaviCell server is ready (internal utility)."    
+    "Test if NaviCell server is ready (internal utility)."
         .self$incMessageId()
         list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_is_ready')
         str_data <- .self$makeData(.self$formatJson(list_param))
@@ -125,7 +122,7 @@ NaviCell$methods(
 
 NaviCell$methods(
     waitForReady =  function(...) {
-    "Wait until NaviCell server is ready (internal utility)."  
+    "Wait until NaviCell server is ready (internal utility)."
         for (i in 1:50) {
             if (.self$serverIsReady() == TRUE) {
                 break
@@ -140,7 +137,7 @@ NaviCell$methods(
 
 NaviCell$methods(
     isImported =  function(...) {
-    "Test if data table is imported (internal utility)."    
+    "Test if data table is imported (internal utility)."
         .self$incMessageId()
         list_param <- list(module='', args = array(), msg_id = .self$msg_id, action = 'nv_is_imported')
         str_data <- .self$makeData(.self$formatJson(list_param))
@@ -154,7 +151,7 @@ NaviCell$methods(
 
 NaviCell$methods(
     waitForImported =  function(...) {
-    "Wait until data is imported (internal utility)."  
+    "Wait until data is imported (internal utility)."
         for (i in 1:50) {
             if (.self$isImported() == TRUE) {
                 message("data imported.")
@@ -177,7 +174,12 @@ NaviCell$methods(
             .self$generateSessionId()
         }
         url <- paste(.self$map_url, '?demo=', .self$demo, '&id=', .self$session_id, '&proxy_url=', .self$proxy_url, sep = '')
-        browseURL(url, .self$browser_command)
+        if(browser_command != ''){
+          browseURL(url, .self$browser_command)
+        } else {
+          browseURL(url)
+        }
+        browseURL(url)
         .self$waitForReady()
     }
 )
@@ -247,7 +249,7 @@ NaviCell$methods(
     formatJson = function(list_param) {
     "Format list of parameters to NaviCell server compatible JSON format (internal utility)."
         data <- toJSON(list_param)
-        # remove unnecessary characters 
+        # remove unnecessary characters
         data <- gsub("\n", '', data)
         data <- gsub(" ", "", data)
         return(data)
@@ -255,7 +257,6 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
-    file2dataString = function(fileName) {
     "Load the content of a text file as tab-delimited string. Convert to NaviCell compatible format."
         data_string <- NULL
         data_string <- paste(readLines(fileName, warn=F),collapse='\n')
@@ -272,7 +273,7 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
-#  Navigation and Zooming functions 
+#  Navigation and Zooming functions
 #
 #------------------------------------------------------------------------------
 
@@ -303,7 +304,7 @@ NaviCell$methods(
 
 NaviCell$methods(
     setMapCenterAbsolute = function(pos_x, pos_y) {
-    "Set the absolute position of the map center. x = x coordinate (integer), y = y coordinate (integer)." 
+    "Set the absolute position of the map center. x = x coordinate (integer), y = y coordinate (integer)."
         .self$incMessageId()
         list_param <- list(module='', args = list('ABSOLUTE', pos_x, pos_y), msg_id = .self$msg_id, action = 'nv_set_center')
         str_data <- .self$makeData(.self$formatJson(list_param))
@@ -315,7 +316,7 @@ NaviCell$methods(
 
 NaviCell$methods(
     moveMapCenter = function(x, y) {
-    "Move the map center (relative). x = x coordinate (integer), y = y coordinate (integer)." 
+    "Move the map center (relative). x = x coordinate (integer), y = y coordinate (integer)."
         .self$incMessageId()
         list_param <- list(module='', args = list('RELATIVE', x, y), msg_id = .self$msg_id, action = 'nv_set_center')
         str_data <- .self$makeData(.self$formatJson(list_param))
@@ -328,13 +329,13 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
-# Entity selection functions 
+# Entity selection functions
 #
 #------------------------------------------------------------------------------
 
 NaviCell$methods(
     selectEntity = function(entity) {
-    "Select an entity on the map. entity = entity's name (string)" 
+    "Select an entity on the map. entity = entity's name (string)"
         .self$incMessageId()
         list_param <- list(module='', args = array(entity), msg_id = .self$msg_id, action = 'nv_find_entities')
         str_data <- .self$makeData(.self$formatJson(list_param))
@@ -346,7 +347,7 @@ NaviCell$methods(
 
 NaviCell$methods(
     findEntities = function(entity, bubble) {
-    "Find one or more entities on the map. entity = entity's name pattern (string), bubble = TRUE or FALSE." 
+    "Find one or more entities on the map. entity = entity's name pattern (string), bubble = TRUE or FALSE."
         .self$incMessageId()
         list_param <- list(module='', args = array(c(entity, bubble)), msg_id = .self$msg_id, action = 'nv_find_entities')
         str_data <- .self$makeData(.self$formatJson(list_param))
@@ -383,7 +384,7 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
-#  Get info from NaviCell server functions 
+#  Get info from NaviCell server functions
 #
 #------------------------------------------------------------------------------
 
@@ -470,7 +471,7 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
-#  Datatable import functions 
+#  Datatable import functions
 #
 #------------------------------------------------------------------------------
 
@@ -485,7 +486,7 @@ NaviCell$methods(
 
         # filter matrix on hugo_list
         # abort if there is no overlap
-        rownames(mat) %in% .self$hugo_list -> idx 
+        rownames(mat) %in% .self$hugo_list -> idx
         if (sum(idx) < 1) {
             warning("Error: no overlap between map and matrix HUGO gene symbols.")
             return()
@@ -497,7 +498,7 @@ NaviCell$methods(
             # convert to list
             gene_list <- rownames(mat)
             sel <- gene_list[idx]
-            data_string <- .self$geneList2string(sel) 
+            data_string <- .self$geneList2string(sel)
         }
 
         # case 2: one or more columns in the matrix
@@ -520,7 +521,7 @@ NaviCell$methods(
                 str_data <- .self$makeData(.self$formatJson(list_param))
 
                 .self$incMessageId()
-                response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+                response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
                 .self$waitForImported()
                 #print(.self$formatResponse(response))
             }
@@ -545,7 +546,7 @@ NaviCell$methods(
         # slice data in packets and send them to server
         for (i in 0:(cmd_packcount-1)) {
             cmd_packnum <- i+1
-            
+
             stop <- (i+1) * .self$packsize
             start <- 0
             if (i > 0) {
@@ -557,13 +558,13 @@ NaviCell$methods(
             start <- start + 1
             stop <- stop + 1
 
-            response <- postForm(.self$proxy_url, style = 'POST', perform = "filling", data = substr(fill_cmd, start, stop), id = .self$session_id, packcount = cmd_packcount, packnum = cmd_packnum, mode='cli2srv', .opts=curlOptions(ssl.verifypeer=F)) 
+            response <- postForm(.self$proxy_url, style = 'POST', perform = "filling", data = substr(fill_cmd, start, stop), id = .self$session_id, packcount = cmd_packcount, packnum = cmd_packnum, mode='cli2srv', .opts=curlOptions(ssl.verifypeer=F))
             #print(.self$formatResponse(response))
         }
 
         # end message to trigger data re-composition on server side
         .self$incMessageId()
-        response <- postForm(.self$proxy_url, style = 'POST', data="@@", id = .self$session_id, perform = "send_and_rcv", packcount = cmd_packcount, msg_id = .self$msg_id, mode='cli2srv', .opts=curlOptions(ssl.verifypeer=F)) 
+        response <- postForm(.self$proxy_url, style = 'POST', data="@@", id = .self$session_id, perform = "send_and_rcv", packcount = cmd_packcount, msg_id = .self$msg_id, mode='cli2srv', .opts=curlOptions(ssl.verifypeer=F))
 
     }
 )
@@ -583,17 +584,17 @@ NaviCell$methods(
     "Convert an R matrix object to a formatted string (internal utility)."
         header = ""
         if (nrow(mat) == 1) {
-            header <- paste(colnames(mat), sep="") 
+            header <- paste(colnames(mat), sep="")
         }
         else {
-            header <- paste(colnames(mat), collapse='\t', sep="") 
+            header <- paste(colnames(mat), collapse='\t', sep="")
         }
 
         string <- paste('@DATA\ngenes\t', header, sep="")
         string <- paste(string, '\n', sep="")
-        nb_row = nrow(mat) 
+        nb_row = nrow(mat)
         for (row in 1:nb_row) {
-            gene_name <- paste(rownames(mat)[row], '\t', sep="")  
+            gene_name <- paste(rownames(mat)[row], '\t', sep="")
             row_string = ""
             if (nb_row == 1) {
                 row_string <- paste(mat[row], sep="")
@@ -618,11 +619,11 @@ NaviCell$methods(
         return(string)
     }
 )
- 
+
 
 #------------------------------------------------------------------------------
 #
-#  Drawing Configuration Dialog functions 
+#  Drawing Configuration Dialog functions
 #
 #------------------------------------------------------------------------------
 
@@ -749,7 +750,7 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
-#  MyData Dialog functions 
+#  MyData Dialog functions
 #
 #------------------------------------------------------------------------------
 
@@ -833,7 +834,7 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
-# Glyph Editor functions 
+# Glyph Editor functions
 #
 #------------------------------------------------------------------------------
 
@@ -951,7 +952,7 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
-# Barplot Editor functions 
+# Barplot Editor functions
 #
 #------------------------------------------------------------------------------
 
@@ -1079,7 +1080,7 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
-# Heatmap Editor functions 
+# Heatmap Editor functions
 #
 #------------------------------------------------------------------------------
 
@@ -1206,7 +1207,7 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
-# Unordered Discrete Configuration Editor functions 
+# Unordered Discrete Configuration Editor functions
 #
 #------------------------------------------------------------------------------
 
@@ -1360,7 +1361,7 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
-# Continuous Configuration Editor functions 
+# Continuous Configuration Editor functions
 #
 #------------------------------------------------------------------------------
 
@@ -1535,7 +1536,7 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
-# Map Staining  functions 
+# Map Staining  functions
 #
 #------------------------------------------------------------------------------
 
@@ -1631,7 +1632,7 @@ NaviCell$methods(
 
 #------------------------------------------------------------------------------
 #
-# Sample Annotation functions 
+# Sample Annotation functions
 #
 #------------------------------------------------------------------------------
 
@@ -1645,7 +1646,7 @@ NaviCell$methods(
                 list_param <- list(module='', args = list("import", data_string), msg_id = .self$msg_id, action = 'nv_sample_annotation_perform')
                 str_data <- .self$makeData(.self$formatJson(list_param))
                 .self$incMessageId()
-                response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+                response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
                 #print(.self$formatResponse(response))
             }
             else {
@@ -1666,7 +1667,7 @@ NaviCell$methods(
         str_data <- .self$makeData(.self$formatJson(list_param))
 
         .self$incMessageId()
-        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
         #print(.self$formatResponse(response))
     }
 )
@@ -1679,7 +1680,7 @@ NaviCell$methods(
         str_data <- .self$makeData(.self$formatJson(list_param))
 
         .self$incMessageId()
-        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
         #print(.self$formatResponse(response))
 
     }
@@ -1693,7 +1694,7 @@ NaviCell$methods(
         str_data <- .self$makeData(.self$formatJson(list_param))
 
         .self$incMessageId()
-        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
         #print(.self$formatResponse(response))
 
     }
@@ -1707,7 +1708,7 @@ NaviCell$methods(
         str_data <- .self$makeData(.self$formatJson(list_param))
 
         .self$incMessageId()
-        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
         #print(.self$formatResponse(response))
     }
 )
@@ -1720,7 +1721,7 @@ NaviCell$methods(
         str_data <- .self$makeData(.self$formatJson(list_param))
 
         .self$incMessageId()
-        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F)) 
+        response <- postForm(.self$proxy_url, style = 'POST', id = .self$session_id, msg_id = .self$msg_id, mode='cli2srv', perform='send_and_rcv', data=str_data, .opts=curlOptions(ssl.verifypeer=F))
         #print(.self$formatResponse(response))
     }
 )
