@@ -10,3 +10,4 @@ Description: Provides a set of functions to access a data visualization web serv
 Depends: R (>= 2.14.0), RCurl, RJSONIO
 Imports: methods
 License: LGPL-2.1 | file LICENSE
+RoxygenNote: 6.0.1

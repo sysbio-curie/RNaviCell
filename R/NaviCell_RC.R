@@ -257,6 +257,7 @@ NaviCell$methods(
 )
 
 NaviCell$methods(
+    file2dataString = function(fileName) {
     "Load the content of a text file as tab-delimited string. Convert to NaviCell compatible format."
         data_string <- NULL
         data_string <- paste(readLines(fileName, warn=F),collapse='\n')
