@@ -1,7 +1,9 @@
 ####Build Status : 
+
 [![Travis-CI Build Status](https://travis-ci.org/sysbio-curie/RNaviCell.svg?branch=master)](https://travis-ci.org/sysbio-curie/RNaviCell)
 
 ####CRAN Status and statistics : 
+
 [![CRAN version](http://www.r-pkg.org/badges/version/RNaviCell)](http://www.r-pkg.org/badges/version/RNaviCell)
 [![CRAN downloads weekly](http://cranlogs.r-pkg.org/badges/RNaviCell)](http://cran.rstudio.com/web/packages/RNaviCell/index.html)
 [![CRAN total](http://cranlogs.r-pkg.org/badges/grand-total/RNaviCell)](http://cran.rstudio.com/web/packagesRNaviCell/index.html)
