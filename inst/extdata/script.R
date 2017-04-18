@@ -1,5 +1,7 @@
+library(RNaviCell)
+
 # create NaviCell object
-n <- NaviCell()
+n <- NaviCell(SetUrl = "https://navicell.curie.fr/navicell/maps/cellcycle/master/index.php")
 
 # create active NaviCell session with the server
 n$launchBrowser()

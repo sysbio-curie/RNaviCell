@@ -61,15 +61,21 @@ NaviCell <- setRefClass(
 
     # Set default values
     methods = list(
-        initialize = function(...) {
+        initialize = function(SetUrl = "", ...) {
           proxy_url <<- Sys.getenv("NV_PROXY_URL")
 	  if (proxy_url == "") {
             proxy_url <<- "https://navicell.curie.fr/cgi-bin/nv_proxy.php"
-          }
-          map_url <<- Sys.getenv("NV_MAP_URL")
-	  if (map_url == "") {
-            map_url <<- "https://navicell.curie.fr/navicell/maps/cellcycle/master/index.php"
 	  }
+    if(SetUrl == ""){
+      map_url <<- Sys.getenv("NV_MAP_URL")
+      if (map_url == "") {
+        map_url <<- "https://navicell.curie.fr/navicell/maps/cellcycle/master/index.php"
+      }
+    } else {
+      print("User-defined url")
+      map_url <<- SetUrl
+    }      
+          
           browser_command <<- Sys.getenv("NV_BROWSER_COMMAND")
           msg_id <<- 1000
           session_id <<- ""
@@ -179,7 +185,7 @@ NaviCell$methods(
         } else {
           browseURL(url)
         }
-        browseURL(url)
+        # browseURL(url)
         .self$waitForReady()
     }
 )
